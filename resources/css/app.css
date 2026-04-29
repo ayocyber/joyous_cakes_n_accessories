@@ -1,0 +1,155 @@
+@import "tailwindcss";
+@import "./home.css";
+@import "./shop.css";
+@import "./contact.css";
+@import "./cart.css";
+/* =========================
+   BASE STYLES
+========================= */
+*, body {
+    font-family: 'DM Sans', sans-serif;
+}
+
+h1, h2, h3, h4, .font-serif {
+    font-family: 'Playfair Display', serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* =========================
+   CSS VARIABLES
+========================= */
+:root {
+    --plum: #7c3aed;
+    --plum-dark: #5b21b6;
+    --blush: #f472b6;
+    --white: #ffffff;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #ede9fe;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #7c3aed, #f472b6);
+    border-radius: 10px;
+}
+
+/* =========================
+   COMPONENTS
+========================= */
+.nav-glass {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(124,58,237,0.08);
+}
+
+.btn-primary {
+    @apply text-white font-semibold relative overflow-hidden;
+    background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #f472b6 100%);
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.btn-primary:hover::after {
+    opacity: 1;
+}
+
+.btn-primary span {
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================
+   TEXT GRADIENT
+========================= */
+.grad-text {
+    background: linear-gradient(135deg, #7c3aed 0%, #9333ea 60%, #f472b6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* =========================
+   BACKGROUNDS
+========================= */
+.bg-warm {
+    background: #faf8ff;
+}
+
+.bg-blush-section {
+    background: #fdf6ff;
+}
+
+/* =========================
+   PATTERN
+========================= */
+.dot-pattern {
+    background-image: radial-gradient(circle, rgba(124,58,237,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+}
+
+/* =========================
+   CART BADGE
+========================= */
+.cart-badge {
+    background: linear-gradient(135deg, #7c3aed, #f472b6);
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+.dropdown-menu {
+    display: none;
+}
+
+.group:hover .dropdown-menu {
+    display: block;
+    animation: slideDown .25s ease forwards;
+}
+
+@keyframes slideDown {
+    from { opacity:0; transform:translateY(-6px); }
+    to { opacity:1; transform:translateY(0); }
+}
+
+/* =========================
+   NAV LINK
+========================= */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background: linear-gradient(90deg, #7c3aed, #f472b6);
+    transition: width .3s ease;
+    border-radius: 2px;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
