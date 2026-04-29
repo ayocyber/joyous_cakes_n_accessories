@@ -2,6 +2,7 @@ import "./home.js";
 import "./contact.js";
 import "./shop.js";
 import "./cart.js";
+import "./product-card.js";
 document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');

@@ -2,9 +2,9 @@
 @section('title', 'Home')
 
 @push('styles')
+
 <style>
 /* ── Reveal ── */
-
 </style>
 @endpush
 
@@ -66,7 +66,6 @@
 
     @foreach($slides as $i => $slide)
     <div class="slide {{ $i === 0 ? 'active' : '' }}" data-index="{{ $i }}">
-        <!-- Background -->
         <div class="slide-bg"></div>
         <div class="slide-shapes">
             <div class="shape shape-1"></div>
@@ -74,24 +73,14 @@
         </div>
         <div class="slide-overlay"></div>
 
-        <!-- Content -->
         <div class="slide-content">
             <div class="max-w-7xl mx-auto px-5 lg:px-8 w-full">
                 <div class="max-w-xl">
-                    <!-- Label pill -->
                     <div class="slide-label">
                         <span class="text-xs font-semibold text-white uppercase tracking-widest">{{ $slide['label'] }}</span>
                     </div>
-
-                    <!-- Headline -->
-                    <h1 class="font-serif slide-title">
-                        {{ $slide['title'] }}
-                    </h1>
-
-                    <!-- Description -->
+                    <h1 class="font-serif slide-title">{{ $slide['title'] }}</h1>
                     <p class="slide-desc">{{ $slide['desc'] }}</p>
-
-                    <!-- CTAs -->
                     <div class="slide-actions">
                         <a href="{{ $slide['cta1']['href'] }}"
                            class="btn-primary px-8 py-4 rounded-full shadow-xl hover:scale-105 transition-all duration-300 flex items-center gap-2 text-sm font-semibold">
@@ -107,21 +96,15 @@
             </div>
         </div>
 
-        <!-- Right visual -->
         <div class="slide-visual">
             <div class="relative">
-                <!-- Glow -->
                 <div class="absolute inset-0 rounded-full bg-white/10 blur-3xl scale-75"></div>
-
-                <!-- Large emoji focal point -->
                 <div class="relative text-center">
                     <div class="text-[10rem] lg:text-[14rem] leading-none drop-shadow-2xl select-none"
                          style="filter: drop-shadow(0 30px 60px rgba(0,0,0,0.4));">
                         {{ $slide['emoji'] }}
                     </div>
                 </div>
-
-                <!-- Float badges -->
                 <div class="float-badge float-badge-1">
                     <div class="w-9 h-9 rounded-xl bg-purple-50 flex items-center justify-center text-lg shrink-0">{{ $slide['badge1']['icon'] }}</div>
                     <div>
@@ -138,11 +121,9 @@
                 </div>
             </div>
         </div>
-
     </div>
     @endforeach
 
-    <!-- Prev / Next arrows -->
     <button class="arrow-btn arrow-prev" id="heroPrev" aria-label="Previous slide">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
     </button>
@@ -150,16 +131,12 @@
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
     </button>
 
-    
-
-    <!-- Dot controls -->
     <div class="slider-controls">
         @foreach($slides as $i => $s)
         <button class="dot {{ $i === 0 ? 'active' : '' }}" data-goto="{{ $i }}" aria-label="Go to slide {{ $i+1 }}"></button>
         @endforeach
     </div>
 
-    <!-- Progress bar -->
     <div class="slide-progress" id="slideProgress"></div>
 
 </section>
@@ -170,6 +147,7 @@
 ══════════════════════════════════ -->
 <section id="products" class="py-20" style="background:#faf8ff;">
     <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
         <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-12 reveal">
             <div>
                 <span class="text-xs font-semibold text-plum uppercase tracking-widest">Top Picks</span>
@@ -180,63 +158,29 @@
                 <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
         </div>
+@php
+    $products = [
+        ['id'=>1,'name'=>'Paper box','price'=>8500,'old'=>'11,000','badge'=>'Bestseller','stars'=>5,'reviews'=>213,'image'=>'images/6_6_6_ paper-boxes.jpeg','bg'=>'from-purple-50 to-purple-100','stock'=>20],
+        ['id'=>2,'name'=>'White Cake Board','price'=>6200,'old'=>null,'badge'=>'Popular','stars'=>5,'reviews'=>142,'image'=>'images/8_,10_,12,14_,16_  white cake boards.jpeg','bg'=>'from-pink-50 to-rose-100','stock'=>15],
+        ['id'=>3,'name'=>'Birthday Coin Toppers','price'=>4800,'old'=>'6,500','badge'=>'Sale','stars'=>4,'reviews'=>89,'image'=>'images/Birthday-coin-toppers.jpeg','bg'=>'from-fuchsia-50 to-pink-100','stock'=>30],
+        ['id'=>4,'name'=>'Birthday Toppers','price'=>15000,'old'=>null,'badge'=>'Premium','stars'=>5,'reviews'=>367,'image'=>'images/Birthday-toppers 2.jpeg','bg'=>'from-indigo-50 to-purple-100','stock'=>10],
+        ['id'=>5,'name'=>'Cake Dowel','price'=>5500,'old'=>'7,000','badge'=>'New','stars'=>5,'reviews'=>54,'image'=>'images/Cake dowel.jpeg','bg'=>'from-purple-100 to-pink-50','stock'=>25],
+        ['id'=>6,'name'=>'Whipped Cream Powder','price'=>3200,'old'=>null,'badge'=>null,'stars'=>4,'reviews'=>71,'image'=>'images/Whipped cream powder 3.jpeg','bg'=>'from-rose-50 to-pink-100','stock'=>18],
+        ['id'=>7,'name'=>'Christmas Cookies Pouch','price'=>4100,'old'=>'5,500','badge'=>'Sale','stars'=>5,'reviews'=>98,'image'=>'images/Christmas cookies or snacks pouch.jpeg','bg'=>'from-pink-50 to-purple-50','stock'=>12],
+        ['id'=>8,'name'=>'Crowns','price'=>22000,'old'=>null,'badge'=>'Gift','stars'=>5,'reviews'=>201,'image'=>'images/Crowns.jpeg','bg'=>'from-purple-50 to-indigo-100','stock'=>8],
+    ];
+@endphp
+
+   <script>
+                    window.SHOP_PRODUCTS = @json($products);
+                </script>
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
-            @php
-                $products = [
-                    ['name'=>'Paper box','price'=>'8,500','old'=>'11,000','badge'=>'Bestseller','stars'=>5,'reviews'=>213,'image'=>'images/6_6_6_ paper-boxes.jpeg','bg'=>'from-purple-50 to-purple-100'],
-                    ['name'=>'White Cake Board','price'=>'6,200','old'=>null,'badge'=>'Popular','stars'=>5,'reviews'=>142,'image'=>'images/8_,10_,12,14_,16_  white cake boards.jpeg','bg'=>'from-pink-50 to-rose-100'],
-                    ['name'=>'Birthday Coin Toppers','price'=>'4,800','old'=>'6,500','badge'=>'Sale','stars'=>4,'reviews'=>89,'image'=>'images/Birthday-coin-toppers.jpeg','bg'=>'from-fuchsia-50 to-pink-100'],
-                    ['name'=>'Birthday Toppers','price'=>'15,000','old'=>null,'badge'=>'Premium','stars'=>5,'reviews'=>367,'image'=>'images/Birthday-toppers 2.jpeg','bg'=>'from-indigo-50 to-purple-100'],
-                    ['name'=>'Cake Dowel','price'=>'5,500','old'=>'7,000','badge'=>'New','stars'=>5,'reviews'=>54,'image'=>'images/Cake dowel.jpeg','bg'=>'from-purple-100 to-pink-50'],
-                    ['name'=>'Whipped Cream Powder','price'=>'3,200','old'=>null,'badge'=>null,'stars'=>4,'reviews'=>71,'image'=>'images/Whipped cream powder 3.jpeg','bg'=>'from-rose-50 to-pink-100'],
-                    ['name'=>'Christmas Cookies or Snacks Pouch','price'=>'4,100','old'=>'5,500','badge'=>'Sale','stars'=>5,'reviews'=>98,'image'=>'images/Christmas cookies or snacks pouch.jpeg','bg'=>'from-pink-50 to-purple-50'],
-                    ['name'=>"Crowns",'price'=>'22,000','old'=>null,'badge'=>'Gift','stars'=>5,'reviews'=>201,'image'=>'images/Crowns.jpeg','bg'=>'from-purple-50 to-indigo-100'],
-                ];
-            @endphp
             @foreach($products as $i => $p)
-            <div class="prod-card reveal d{{ ($i%4)+1 }}">
-                @if($p['badge'])
-                <div class="absolute top-3 left-3 z-10">
-                    <span class="text-xs font-semibold text-white px-3 py-1 rounded-full shadow
-                        {{ $p['badge']==='Sale' ? 'bg-blush' : ($p['badge']==='Premium' || $p['badge']==='Gift' ? 'bg-gray-800' : 'bg-plum') }}">
-                        {{ $p['badge'] }}
-                    </span>
-                </div>
-                @endif
-                <button class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:scale-110 hover:bg-plum group transition-all shadow">
-                    <svg class="w-4 h-4 text-gray-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                </button>
-                <div class="relative overflow-hidden">
-                    <div class="prod-img bg-gradient-to-br {{ $p['bg'] }}">
-                        <span class="text-7xl select-none">
-                            <img src="{{ asset($p['image']) }}" alt="{{ $p['name'] }}" class="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105">
-                            {{-- {{ $p['emoji'] }}</span> --}}
-                    </div>
-                    <div class="hover-actions">
-                        <button class="bg-white text-plum text-xs font-bold px-4 py-2 rounded-full hover:scale-105 transition-transform shadow">Quick View</button>
-                        <button class="bg-white text-blush text-xs font-bold px-4 py-2 rounded-full hover:scale-105 transition-transform shadow">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <p class="font-medium text-gray-900 text-sm mb-1 truncate">{{ $p['name'] }}</p>
-                    <div class="flex items-center gap-1 mb-2">
-                        @for($s=0;$s<$p['stars'];$s++)<svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>@endfor
-                        <span class="text-xs text-gray-400">({{ $p['reviews'] }})</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="font-bold text-plum text-sm">₦{{ $p['price'] }}</span>
-                        @if($p['old'])<span class="text-xs text-gray-400 line-through">₦{{ $p['old'] }}</span>@endif
-                    </div>
-                </div>
-                <div class="border-t border-gray-50 px-4 py-3">
-                    <button class="w-full btn-primary text-xs font-semibold py-2.5 rounded-full hover:scale-[1.02] transition-transform shadow">
-                        🛒 Add to Cart
-                    </button>
-                </div>
-            </div>
+                <x-product-card :product="$p" :index="$i" :delay="($i % 4) + 1" />
             @endforeach
         </div>
+
     </div>
 </section>
 
@@ -329,13 +273,29 @@
     </div>
 </section>
 
+
+{{-- Modal lives INSIDE @section, BEFORE @endsection --}}
+@include('components.quick-view-modal')
+
 @endsection
 
 @push('scripts')
+@php
+    $productsJson = array_values(array_map(function($p) {
+        return [
+            'name'    => $p['name'],
+            'price'   => $p['price'],
+            'old'     => $p['old'] ?? null,
+            'badge'   => $p['badge'] ?? null,
+            'stars'   => $p['stars'],
+            'reviews' => $p['reviews'],
+            'image'   => asset($p['image']),
+        ];
+    }, $products));
+@endphp
 <script>
-/* ══════════════════════════════════
-   HERO SLIDESHOW
-══════════════════════════════════ */
-
+    window.PRODUCTS = @json($productsJson);
 </script>
+<script src="{{ asset('js/product-card.js') }}" defer></script>
+{{-- Hero slideshow JS --}}
 @endpush

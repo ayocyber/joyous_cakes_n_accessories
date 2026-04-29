@@ -15,6 +15,7 @@
     </style>
 
     @stack('styles')
+    <script src="/js/cart-utils.js"></script>
 </head>
 <body class="bg-white text-gray-800 antialiased overflow-x-hidden">
 
@@ -37,7 +38,7 @@
                 <div class="hidden lg:flex items-center gap-7">
                     <a href="{{ url('/') }}" class="nav-link text-sm font-medium text-gray-600 hover:text-plum transition-colors">Home</a>
                     <a href="/shop" class="nav-link text-sm font-medium text-gray-600 hover:text-plum transition-colors">Shop</a>
-                    <a href="/contact" class="nav-link text-sm font-medium text-gray-600 hover:text-plum transition-colors">Contact</a>
+                    <a href="/contact" class="nav-link text-sm font-medium text-gray-600 hover:text-plum transition-colors">Contact us</a>
                    
                 </div>
 

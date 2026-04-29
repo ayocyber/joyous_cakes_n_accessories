@@ -5,6 +5,39 @@
 <style>
 /* ── Reveal ── */
 
+/* ── Add-to-cart button states ── */
+.add-to-cart-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all .25s ease;
+}
+.add-to-cart-btn.added {
+    background: linear-gradient(135deg, #16a34a, #15803d) !important;
+    border-color: #16a34a !important;
+}
+.add-to-cart-btn .btn-label { transition: opacity .2s, transform .2s; }
+.add-to-cart-btn .btn-label-added {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .2s, transform .2s;
+}
+.add-to-cart-btn.added .btn-label { opacity: 0; transform: translateY(-6px); }
+.add-to-cart-btn.added .btn-label-added { opacity: 1; transform: translateY(0); }
+
+/* ── Cart added pop feedback ── */
+@keyframes cartPop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.18); }
+    70%  { transform: scale(.94); }
+    100% { transform: scale(1); }
+}
+.cart-pop { animation: cartPop .4s cubic-bezier(.34,1.56,.64,1); }
 </style>
 @endpush
 
@@ -46,8 +79,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </section>
 
@@ -91,11 +122,8 @@
                         <label class="check-item">
                             <input type="checkbox" {{ $r >= 4 ? 'checked' : '' }}>
                             <div class="flex text-yellow-400 text-xs">
-                                @for($i=0;$i<$r;$i++)★
-                                @endfor
-                                @for($i=$r;$i<5;$i++)
-                                ☆
-                                @endfor
+                                @for($i=0;$i<$r;$i++)★@endfor
+                                @for($i=$r;$i<5;$i++)☆@endfor
                             </div>
                             <span class="text-xs text-gray-500">& above</span>
                         </label>
@@ -150,72 +178,84 @@
                 <!-- Grid -->
                 @php
                     $products = [
-                        ['name'=>'Non-Stick Round Tin Set (3pc)','price'=>'8,500','old'=>'11,000','badge'=>'Bestseller','stars'=>5,'reviews'=>213,'emoji'=>'🍰','bg'=>'from-purple-50 to-purple-100','stock'=>true],
-                        ['name'=>'Piping Tips Collection (24pc)','price'=>'6,200','old'=>null,'badge'=>'Popular','stars'=>5,'reviews'=>142,'emoji'=>'🎨','bg'=>'from-pink-50 to-rose-100','stock'=>true],
-                        ['name'=>'Fondant Smoother & Cutter Set','price'=>'4,800','old'=>'6,500','badge'=>'Sale','stars'=>4,'reviews'=>89,'emoji'=>'🍬','bg'=>'from-fuchsia-50 to-pink-100','stock'=>true],
-                        ['name'=>'Professional Turntable','price'=>'15,000','old'=>null,'badge'=>'Premium','stars'=>5,'reviews'=>367,'emoji'=>'🎠','bg'=>'from-indigo-50 to-purple-100','stock'=>true],
-                        ['name'=>'Silicone Bundt Mould','price'=>'5,500','old'=>'7,000','badge'=>'New','stars'=>5,'reviews'=>54,'emoji'=>'🧁','bg'=>'from-purple-100 to-pink-50','stock'=>true],
-                        ['name'=>'Cake Board Bundle (10pc)','price'=>'3,200','old'=>null,'badge'=>null,'stars'=>4,'reviews'=>71,'emoji'=>'🎀','bg'=>'from-rose-50 to-pink-100','stock'=>true],
-                        ['name'=>'Offset Spatula Set (3pc)','price'=>'4,100','old'=>'5,500','badge'=>'Sale','stars'=>5,'reviews'=>98,'emoji'=>'🔪','bg'=>'from-pink-50 to-purple-50','stock'=>true],
-                        ['name'=>"Baker's Starter Kit",'price'=>'22,000','old'=>null,'badge'=>'Gift','stars'=>5,'reviews'=>201,'emoji'=>'🎁','bg'=>'from-purple-50 to-indigo-100','stock'=>true],
-                        ['name'=>'Flower Nail Set (12pc)','price'=>'2,800','old'=>null,'badge'=>null,'stars'=>4,'reviews'=>33,'emoji'=>'🌸','bg'=>'from-pink-50 to-rose-50','stock'=>true],
-                        ['name'=>'Silicone Lace Mat','price'=>'3,900','old'=>'5,200','badge'=>'Sale','stars'=>4,'reviews'=>45,'emoji'=>'🕸️','bg'=>'from-purple-50 to-fuchsia-50','stock'=>false],
-                        ['name'=>'Cake Dummy Set (5pc)','price'=>'7,500','old'=>null,'badge'=>'Pro','stars'=>5,'reviews'=>19,'emoji'=>'🎂','bg'=>'from-indigo-50 to-purple-50','stock'=>true],
-                        ['name'=>'Pastry Brush Set','price'=>'2,100','old'=>null,'badge'=>null,'stars'=>4,'reviews'=>62,'emoji'=>'🖌️','bg'=>'from-yellow-50 to-pink-50','stock'=>true],
+                        ['id'=>1, 'name'=>'Paper box','price'=>8500,'old'=>'11,000','badge'=>'Bestseller','stars'=>5,'reviews'=>213,'image'=>'images/6_6_6_ paper-boxes.jpeg','bg'=>'from-purple-50 to-purple-100','stock'=>20],
+                        ['id'=>2, 'name'=>'White Cake Board','price'=>6200,'old'=>null,'badge'=>'Popular','stars'=>5,'reviews'=>142,'image'=>'images/8_,10_,12,14_,16_  white cake boards.jpeg','bg'=>'from-pink-50 to-rose-100','stock'=>15],
+                        ['id'=>3, 'name'=>'Birthday Coin Toppers','price'=>4800,'old'=>'6,500','badge'=>'Sale','stars'=>4,'reviews'=>89,'image'=>'images/Birthday-coin-toppers.jpeg','bg'=>'from-fuchsia-50 to-pink-100','stock'=>30],
+                        ['id'=>4, 'name'=>'Birthday Toppers','price'=>15000,'old'=>null,'badge'=>'Premium','stars'=>5,'reviews'=>367,'image'=>'images/Birthday-toppers 2.jpeg','bg'=>'from-indigo-50 to-purple-100','stock'=>10],
+                        ['id'=>5, 'name'=>'Cake Dowel','price'=>5500,'old'=>'7,000','badge'=>'New','stars'=>5,'reviews'=>54,'image'=>'images/Cake dowel.jpeg','bg'=>'from-purple-100 to-pink-50','stock'=>25],
+                        ['id'=>6, 'name'=>'Whipped Cream Powder','price'=>3200,'old'=>null,'badge'=>null,'stars'=>4,'reviews'=>71,'image'=>'images/Whipped cream powder 3.jpeg','bg'=>'from-rose-50 to-pink-100','stock'=>18],
+                        ['id'=>7, 'name'=>'Christmas Cookies Pouch','price'=>4100,'old'=>'5,500','badge'=>'Sale','stars'=>5,'reviews'=>98,'image'=>'images/Christmas cookies or snacks pouch.jpeg','bg'=>'from-pink-50 to-purple-50','stock'=>12],
+                        ['id'=>8, 'name'=>'Crowns','price'=>22000,'old'=>null,'badge'=>'Gift','stars'=>5,'reviews'=>201,'image'=>'images/Crowns.jpeg','bg'=>'from-purple-50 to-indigo-100','stock'=>8],
                     ];
                 @endphp
 
+                {{-- Encode products as JSON for JS ──────────────────────────── --}}
+                <script>
+                    window.SHOP_PRODUCTS = @json($products);
+                </script>
+
                 <div id="productGrid" class="grid grid-cols-2 xl:grid-cols-3 gap-4">
                     @foreach($products as $i => $p)
-                    <div class="prod-card reveal d{{ ($i%4)+1 }}">
-                        @if($p['badge'])
-                        <div class="absolute top-3 left-3 z-10">
-                            <span class="text-xs font-semibold text-white px-3 py-1 rounded-full shadow
-                                {{ $p['badge']==='Sale' ? 'bg-blush' : ($p['badge']==='Premium'||$p['badge']==='Pro'||$p['badge']==='Gift' ? 'bg-gray-800' : 'bg-plum') }}">
+                    {{-- Pass product data attrs so JS can pick them up --}}
+                    <div class="product-card reveal" data-delay="{{ ($i % 4) + 1 }}">
+
+                        {{-- Image / thumb --}}
+                        <div class="product-img-wrap bg-gradient-to-br {{ $p['bg'] }} relative overflow-hidden rounded-t-2xl">
+                            <img src="{{ $p['image'] }}" alt="{{ $p['name'] }}"
+                                 class="w-full h-48 object-cover"
+                                 onerror="this.style.display='none'">
+
+                            @if(!empty($p['badge']))
+                            <span class="absolute top-3 left-3 text-xs font-bold text-white px-2.5 py-1 rounded-full shadow
+                                {{ $p['badge']==='Sale' ? 'bg-blush' : ($p['badge']==='New' ? 'bg-green-500' : 'bg-plum') }}">
                                 {{ $p['badge'] }}
                             </span>
+                            @endif
+
+                            {{-- Quick wishlist --}}
+                            <button class="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center shadow hover:bg-white transition-all text-gray-400 hover:text-rose-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                            </button>
                         </div>
-                        @endif
-                        @if(!$p['stock'])
-                        <div class="absolute top-3 right-12 z-10">
-                            <span class="text-xs font-semibold text-white bg-gray-400 px-3 py-1 rounded-full shadow">Out of Stock</span>
-                        </div>
-                        @endif
-                        <button class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:scale-110 hover:bg-plum group transition-all shadow">
-                            <svg class="w-4 h-4 text-gray-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                        </button>
-                        <div class="relative overflow-hidden">
-                            <div class="prod-img bg-gradient-to-br {{ $p['bg'] }}">
-                                <span class="text-7xl select-none">{{ $p['emoji'] }}</span>
-                            </div>
-                            <div class="hover-actions">
-                                <button class="bg-white text-plum text-xs font-bold px-4 py-2 rounded-full hover:scale-105 transition-transform shadow">Quick View</button>
-                                @if($p['stock'])
-                                <button class="bg-white text-blush text-xs font-bold px-4 py-2 rounded-full hover:scale-105 transition-transform shadow">Add to Cart</button>
-                                @endif
-                            </div>
-                        </div>
+
+                        {{-- Details --}}
                         <div class="p-4">
-                            <p class="font-medium text-gray-900 text-sm mb-1 line-clamp-2 leading-snug">{{ $p['name'] }}</p>
-                            <div class="flex items-center gap-1 mb-2">
-                                @for($s=0;$s<$p['stars'];$s++)<svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>@endfor
+                            {{-- Stars --}}
+                            <div class="flex items-center gap-1 mb-1.5">
+                                <span class="text-yellow-400 text-xs">
+                                    @for($s=0;$s<$p['stars'];$s++)★@endfor
+                                    @for($s=$p['stars'];$s<5;$s++)☆@endfor
+                                </span>
                                 <span class="text-xs text-gray-400">({{ $p['reviews'] }})</span>
                             </div>
-                            <div class="flex items-center gap-2">
-                                <span class="font-bold text-plum text-sm">₦{{ $p['price'] }}</span>
-                                @if($p['old'])<span class="text-xs text-gray-400 line-through">₦{{ $p['old'] }}</span>@endif
+
+                            <p class="font-serif font-bold text-gray-900 text-sm leading-snug mb-2">{{ $p['name'] }}</p>
+
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="font-bold text-plum">₦{{ number_format($p['price']) }}</span>
+                                @if(!empty($p['old']))
+                                <span class="text-xs text-gray-400 line-through">₦{{ $p['old'] }}</span>
+                                @endif
                             </div>
-                        </div>
-                        <div class="border-t border-gray-50 px-4 py-3">
-                            @if($p['stock'])
-                            <button class="w-full btn-primary text-xs font-semibold py-2.5 rounded-full hover:scale-[1.02] transition-transform shadow">
-                                🛒 Add to Cart
+
+                            {{-- ── ADD TO CART BUTTON ── --}}
+                            <button
+                                class="add-to-cart-btn w-full btn-primary text-xs font-semibold py-2.5 rounded-full shadow transition-all"
+                                data-id="{{ $p['id'] }}"
+                                data-name="{{ $p['name'] }}"
+                                data-price="{{ $p['price'] }}"
+                                data-stock="{{ $p['stock'] }}"
+                                data-image="{{ $p['image'] }}"
+                                data-badge="{{ $p['badge'] ?? '' }}"
+                                onclick="handleAddToCart(this)">
+                                <span class="btn-label flex items-center justify-center gap-1.5">
+                                    🛒 Add to Cart
+                                </span>
+                                <span class="btn-label-added">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                    Added!
+                                </span>
                             </button>
-                            @else
-                            <button class="w-full bg-gray-100 text-gray-400 text-xs font-semibold py-2.5 rounded-full cursor-not-allowed" disabled>
-                                Notify Me
-                            </button>
-                            @endif
                         </div>
                     </div>
                     @endforeach
@@ -242,10 +282,93 @@
     </div>
 </section>
 
+{{-- ── Toast notification ── --}}
+<div id="toast" class="fixed bottom-6 right-6 z-50 bg-white rounded-2xl shadow-2xl border border-purple-100 px-5 py-4 flex items-center gap-3 translate-y-24 opacity-0 transition-all duration-500 pointer-events-none max-w-xs">
+    <span class="text-2xl" id="toastIcon">🛒</span>
+    <div>
+        <p class="text-sm font-bold text-gray-900" id="toastTitle">Added to cart!</p>
+        <p class="text-xs text-gray-400" id="toastMsg"></p>
+    </div>
+    <a href="/cart" class="ml-auto text-xs font-bold text-plum whitespace-nowrap hover:underline">View Cart →</a>
+</div>
+
 @endsection
 
 @push('scripts')
-<script>
+{{-- Load shared cart utility first --}}
+<script src="/js/cart-utils.js"></script>
 
+<script>
+/* ══════════════════════════════════
+   SHOP PAGE — ADD TO CART LOGIC
+══════════════════════════════════ */
+
+/**
+ * Restores button visual state for items already in cart when page loads.
+ */
+function syncButtonStates() {
+    const cart = CartUtils.getCart();
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        const id = String(btn.dataset.id);
+        if (cart[id]) {
+            btn.classList.add('added');
+            btn.querySelector('.btn-label').textContent = `🛒 In Cart (${cart[id].qty})`;
+        }
+    });
+}
+
+/**
+ * Called when user clicks any "Add to Cart" button.
+ */
+function handleAddToCart(btn) {
+    const product = {
+        id:    btn.dataset.id,
+        name:  btn.dataset.name,
+        price: Number(btn.dataset.price),
+        stock: Number(btn.dataset.stock),
+        image: btn.dataset.image,
+        badge: btn.dataset.badge,
+        emoji: '🛒',   // fallback for cart page thumb
+    };
+
+    const newQty = CartUtils.addItem(product);
+
+    // Visual feedback — "added" state
+    btn.classList.add('added');
+    btn.querySelector('.btn-label').textContent = `🛒 In Cart (${newQty})`;
+
+    // Pop animation on the badge
+    const badge = document.querySelector('[data-cart-count]');
+    if (badge) { badge.classList.remove('cart-pop'); void badge.offsetWidth; badge.classList.add('cart-pop'); }
+
+    showToast('🛒', 'Added to cart!', `${product.name} × ${newQty}`);
+}
+
+/* ── Toast ── */
+function showToast(icon, title, msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastIcon').textContent  = icon;
+    document.getElementById('toastTitle').textContent = title;
+    document.getElementById('toastMsg').textContent   = msg;
+    t.classList.remove('translate-y-24', 'opacity-0');
+    t.classList.add('translate-y-0', 'opacity-100');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => {
+        t.classList.add('translate-y-24', 'opacity-0');
+        t.classList.remove('translate-y-0', 'opacity-100');
+    }, 3500);
+}
+
+/* ── Price range label ── */
+document.getElementById('priceRange')?.addEventListener('input', function () {
+    document.getElementById('priceVal').textContent = '₦' + Number(this.value).toLocaleString('en-NG');
+});
+
+/* ── Reveal animations ── */
+const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }), { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ── Init ── */
+document.addEventListener('DOMContentLoaded', syncButtonStates);
 </script>
 @endpush
