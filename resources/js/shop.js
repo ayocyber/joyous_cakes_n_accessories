@@ -52,4 +52,37 @@ document.addEventListener('DOMContentLoaded', () => {
             gridBtn.classList.remove('bg-plum', 'text-white');
         });
     }
+
+
+    /* ── Mobile filter toggle ── */
+(function () {
+    const toggle  = document.getElementById('filterToggle');
+    const panel   = document.getElementById('filterPanel');
+    const chevron = document.getElementById('filterChevron');
+    if (!toggle || !panel) return;
+
+    let open = false;
+
+    toggle.addEventListener('click', function () {
+        open = !open;
+        // Animate height: 0 → scrollHeight → auto
+        if (open) {
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+            chevron.style.transform = 'rotate(180deg)';
+            // After transition, set to 'none' so inner dynamic content works
+            panel.addEventListener('transitionend', function once() {
+                if (open) panel.style.maxHeight = 'none';
+                panel.removeEventListener('transitionend', once);
+            });
+        } else {
+            // Snap back from 'none' to a fixed px before animating to 0
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+            requestAnimationFrame(() => {
+                panel.style.maxHeight = '0px';
+                chevron.style.transform = 'rotate(0deg)';
+            });
+        }
+    });
+})();
+
 });

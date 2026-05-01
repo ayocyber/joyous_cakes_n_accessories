@@ -281,21 +281,25 @@
 
 @push('scripts')
 @php
-    $productsJson = array_values(array_map(function($p) {
-        return [
-            'name'    => $p['name'],
-            'price'   => $p['price'],
-            'old'     => $p['old'] ?? null,
-            'badge'   => $p['badge'] ?? null,
-            'stars'   => $p['stars'],
-            'reviews' => $p['reviews'],
-            'image'   => asset($p['image']),
-        ];
-    }, $products));
+        $productsJson = array_values(array_map(function($p) {
+            return [
+                'id'      => $p['id'],
+                'name'    => $p['name'],
+                'price'   => (string) $p['price'],   // product-card.js does parseInt(p.price.replace...)
+                'old'     => isset($p['old']) ? (string) $p['old'] : null,
+                'badge'   => $p['badge'] ?? null,
+                'stars'   => $p['stars'],
+                'reviews' => $p['reviews'],
+                'image'   => asset($p['image']),
+                'stock'   => $p['stock'] ?? 99,
+                'emoji'   => $p['emoji'] ?? '📦',
+            ];
+        }, $products));
 @endphp
 <script>
     window.PRODUCTS = @json($productsJson);
 </script>
-<script src="{{ asset('js/product-card.js') }}" defer></script>
+<script src="{{ asset('js/cart-utils.js') }}"></script> 
+<script src="{{ asset('js/product-card.js') }}" ></script>
 {{-- Hero slideshow JS --}}
 @endpush

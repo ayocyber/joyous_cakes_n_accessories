@@ -58,7 +58,9 @@
                     <!-- Cart -->
                     <a href="/cart" class="relative p-2 rounded-full hover:bg-purple-50 transition-colors group">
                         <svg class="w-5 h-5 text-gray-400 group-hover:text-plum transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                        <span class="absolute -top-0.5 -right-0.5 w-4 h-4 cart-badge rounded-full text-white text-[10px] flex items-center justify-center font-bold">3</span>
+                        <span data-cart-count
+    class="absolute -top-0.5 -right-0.5 w-4 h-4 cart-badge rounded-full text-white text-[10px] flex items-center justify-center font-bold">
+</span>
                     </a>
 
                    
@@ -94,7 +96,9 @@
                 <!-- Brand -->
                 <div class="lg:col-span-1">
                     <div class="flex items-center gap-3 mb-5">
-                        <div class="w-9 h-9 rounded-xl btn-primary flex items-center justify-center shadow-md text-base">🎂</div>
+                        <div class="w-9 h-9 rounded-xl btn-primary flex items-center justify-center shadow-md text-base">
+                             <img src="{{ asset('images/joyous_logo_2.png') }}" alt="Logo" class="w-20 h-12">
+                        </div>
                         <span class="text-xl font-serif font-bold grad-text">Joyous</span>
                     </div>
                     <p class="text-sm text-gray-500 leading-relaxed mb-5">Professional baking accessories for home bakers and pastry artists. Elevate every bake.</p>

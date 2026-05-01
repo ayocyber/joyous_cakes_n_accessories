@@ -47,7 +47,7 @@
                 <span class="text-xs font-semibold text-plum uppercase tracking-widest">Your Shopping Bag</span>
                 <h1 class="font-serif text-4xl lg:text-5xl font-bold text-gray-900 mt-1">
                     My <em class="grad-text not-italic">Cart</em>
-                    <span id="cartCountBadge" class="align-middle inline-flex items-center justify-center w-9 h-9 rounded-full bg-plum text-white text-sm font-bold ml-3 shadow-md">0</span>
+                    <span id="cartCountBadge" class="align-middle inline-flex items-center justify-center w-9 h-9 rounded-full bg-plum text-red text-sm font-bold ml-3 shadow-md">0</span>
                 </h1>
             </div>
             <a href="/shop" class="flex items-center gap-2 text-sm font-semibold text-plum hover:text-blush transition-colors group">
@@ -293,6 +293,7 @@
 
 @push('scripts')
 <script src="/js/cart-utils.js"></script>
+<script src="/js/product-card.js"></script>  
 
 <script>
 /* ═══════════════════════════════════
@@ -612,6 +613,16 @@ function showToast(icon, title, msg) {
         t.classList.add('translate-y-24', 'opacity-0');
         t.classList.remove('translate-y-0', 'opacity-100');
     }, 3200);
+}
+
+/* ── Sync nav cart badge ── */
+function syncNavCartBadge() {
+    const cart  = CartUtils.getCart();
+    const count = Object.values(cart).reduce((sum, item) => sum + item.qty, 0);
+    document.querySelectorAll('[data-cart-count]').forEach(el => {
+        el.textContent = count;
+        el.style.display = count > 0 ? 'flex' : 'none';
+    });
 }
 
 /* ── Reveal ── */

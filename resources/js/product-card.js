@@ -127,12 +127,23 @@ function toggleQvWish() {
 }
 
 /* ── Cart ── */
+/* ── Cart ── */
 function qvAddToCart() {
-    addToCart(qvCurrentIndex);
-}
+    const p = products[qvCurrentIndex];
+    if (!p) return;
 
-function addToCart(index) {
-    console.log('Add to cart:', products[index]);
+    // Build a product object that matches CartUtils expectations
+    const product = {
+        id:    p.id,
+        name:  p.name,
+        price: parseInt(p.price.replace(/,/g, ''), 10),
+        image: p.image  || null,
+        emoji: p.emoji  || '📦',
+        badge: p.badge  || '',
+        stock: p.stock  || 99,
+    };
+
+    CartUtils.addItem(product);          // ← use CartUtils, writes to 'bakery_cart'
     _flashCartBtn(document.getElementById('qvCartBtn'));
 }
 
@@ -168,3 +179,34 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+
+function handleAddToCart(btn) {
+    const product = {
+        id:    btn.dataset.id,
+        name:  btn.dataset.name,
+        price: Number(btn.dataset.price),
+        stock: Number(btn.dataset.stock) || 99,
+        image: btn.dataset.image || null,
+        badge: btn.dataset.badge || '',
+        emoji: '📦',
+    };
+
+    const result = CartUtils.addItem(product);
+
+    if (result === 'max') return; // optional: show toast
+
+    // Flash the button
+    btn.classList.add('added');
+    setTimeout(() => btn.classList.remove('added'), 2500);
+}
+
+
+// Expose to global scope for inline onclick handlers
+window.handleAddToCart = handleAddToCart;
+window.openQuickView   = openQuickView;
+window.closeQuickView  = closeQuickView;
+window.qvQty           = qvQty;
+window.toggleQvWish    = toggleQvWish;
+window.qvAddToCart     = qvAddToCart;
+

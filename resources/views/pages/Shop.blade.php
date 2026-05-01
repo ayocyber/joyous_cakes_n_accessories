@@ -90,62 +90,89 @@
     <div class="max-w-7xl mx-auto px-5 lg:px-8">
         <div class="flex flex-col lg:flex-row gap-8">
 
-            <!-- ── SIDEBAR ── -->
-            <aside class="w-full lg:w-64 shrink-0 space-y-5">
+          {{-- ── SIDEBAR / FILTER ── --}}
+<aside class="w-full lg:w-64 shrink-0">
 
-                <!-- Search -->
-                <div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
-                    <span class="filter-label">Search</span>
-                    <div class="relative">
-                        <input type="text" placeholder="Search products…"
-                            class="w-full bg-purple-50 border border-purple-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-plum focus:ring-2 focus:ring-purple-100 transition-all pr-9 placeholder-gray-400">
-                        <svg class="w-4 h-4 text-plum absolute right-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    {{-- Mobile: Filter toggle button (hidden on desktop) --}}
+    <div class="lg:hidden mb-4">
+        <button id="filterToggle"
+            class="w-full flex items-center justify-between bg-white border border-purple-100 rounded-2xl px-5 py-3.5 shadow-sm text-sm font-semibold text-gray-800">
+            <span class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-plum" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/>
+                </svg>
+                Filters
+            </span>
+            <span id="filterBadge" class="hidden bg-plum text-white text-xs font-bold px-2 py-0.5 rounded-full">3</span>
+            <svg id="filterChevron" class="w-4 h-4 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </button>
+    </div>
+
+    {{-- Filter panel — collapsible on mobile, always visible on desktop --}}
+    <div id="filterPanel"
+         class="overflow-hidden transition-all duration-300 ease-in-out
+                max-h-0 lg:max-h-none
+                space-y-5">
+
+        {{-- Search --}}
+        <div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
+            <span class="filter-label">Search</span>
+            <div class="relative">
+                <input type="text" placeholder="Search products…"
+                    class="w-full bg-purple-50 border border-purple-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-plum focus:ring-2 focus:ring-purple-100 transition-all pr-9 placeholder-gray-400">
+                <svg class="w-4 h-4 text-plum absolute right-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </div>
+        </div>
+
+        {{-- Price Range --}}
+        <div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
+            <span class="filter-label">Price Range</span>
+            <input type="range" min="0" max="50000" value="25000" class="price-range my-2" id="priceRange">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                <span>₦0</span>
+                <span class="font-semibold text-plum" id="priceVal">₦25,000</span>
+                <span>₦50,000</span>
+            </div>
+        </div>
+
+        {{-- Ratings --}}
+        <div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
+            <span class="filter-label">Rating</span>
+            <div class="space-y-1">
+                @foreach([5,4,3,2] as $r)
+                <label class="check-item">
+                    <input type="checkbox" {{ $r >= 4 ? 'checked' : '' }}>
+                    <div class="flex text-yellow-400 text-xs">
+                        @for($i=0;$i<$r;$i++)★@endfor
+                        @for($i=$r;$i<5;$i++)☆@endfor
                     </div>
-                </div>
+                    <span class="text-xs text-gray-500">& above</span>
+                </label>
+                @endforeach
+            </div>
+        </div>
 
-                <!-- Price Range -->
-                <div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
-                    <span class="filter-label">Price Range</span>
-                    <input type="range" min="0" max="50000" value="25000" class="price-range my-2" id="priceRange">
-                    <div class="flex justify-between text-xs text-gray-500 mt-1">
-                        <span>₦0</span>
-                        <span class="font-semibold text-plum" id="priceVal">₦25,000</span>
-                        <span>₦50,000</span>
-                    </div>
-                </div>
+        {{-- Availability --}}
+        <div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
+            <span class="filter-label">Availability</span>
+            <div class="space-y-1">
+                <label class="check-item"><input type="checkbox" checked><span class="text-sm text-gray-600">In Stock</span></label>
+                <label class="check-item"><input type="checkbox"><span class="text-sm text-gray-600">Pre-Order</span></label>
+                <label class="check-item"><input type="checkbox"><span class="text-sm text-gray-600">On Sale</span></label>
+            </div>
+        </div>
 
-                <!-- Ratings -->
-                <div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
-                    <span class="filter-label">Rating</span>
-                    <div class="space-y-1">
-                        @foreach([5,4,3,2] as $r)
-                        <label class="check-item">
-                            <input type="checkbox" {{ $r >= 4 ? 'checked' : '' }}>
-                            <div class="flex text-yellow-400 text-xs">
-                                @for($i=0;$i<$r;$i++)★@endfor
-                                @for($i=$r;$i<5;$i++)☆@endfor
-                            </div>
-                            <span class="text-xs text-gray-500">& above</span>
-                        </label>
-                        @endforeach
-                    </div>
-                </div>
-
-                <!-- Availability -->
-                <div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
-                    <span class="filter-label">Availability</span>
-                    <div class="space-y-1">
-                        <label class="check-item"><input type="checkbox" checked><span class="text-sm text-gray-600">In Stock</span></label>
-                        <label class="check-item"><input type="checkbox"><span class="text-sm text-gray-600">Pre-Order</span></label>
-                        <label class="check-item"><input type="checkbox"><span class="text-sm text-gray-600">On Sale</span></label>
-                    </div>
-                </div>
-
-                <!-- Clear filters -->
-                <button class="w-full border-2 border-purple-200 text-plum font-semibold py-3 rounded-xl text-sm hover:bg-plum hover:text-white hover:border-plum transition-all">
-                    Clear All Filters
-                </button>
-            </aside>
+        {{-- Clear filters --}}
+        <button class="w-full border-2 border-purple-200 text-plum font-semibold py-3 rounded-xl text-sm hover:bg-plum hover:text-white hover:border-plum transition-all">
+            Clear All Filters
+        </button>
+    </div>
+</aside>
 
 
             <!-- ── PRODUCT GRID ── -->
