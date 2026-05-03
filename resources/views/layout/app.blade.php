@@ -30,7 +30,7 @@
                         
                     <div>
                         <span class="text-xl font-serif font-bold grad-text tracking-wide">Joyous</span>
-                        <span class="hidden sm:block text-[9px] text-gray-400 uppercase tracking-[0.15em] -mt-0.5 block">Cakes N  Accessories</span>
+                        <span class="hidden sm:block text-black text-black-900 font-extrabold uppercase tracking-[0.15em] -mt-0.5 ">Cakes N  Accessories</span>
                     </div>
                 </a>
 
@@ -84,9 +84,9 @@
     </nav>
 
     <!-- PAGE CONTENT -->
-    <main class="relative z-10">
-        @yield('content')
-    </main>
+   <main class="relative z-10 ">
+    @yield('content')
+</main>
 
     <!-- ══ FOOTER ══ -->
     <footer class="bg-white border-t border-purple-50 mt-16">
@@ -99,7 +99,11 @@
                         <div class="w-9 h-9 rounded-xl btn-primary flex items-center justify-center shadow-md text-base">
                              <img src="{{ asset('images/joyous_logo_2.png') }}" alt="Logo" class="w-20 h-12">
                         </div>
-                        <span class="text-xl font-serif font-bold grad-text">Joyous</span>
+                        <div>
+                        <span class="text-xl font-serif font-bold grad-text tracking-wide">Joyous</span>
+                        <span class="hidden sm:block text-black text-black-900 font-extrabold uppercase tracking-[0.15em] -mt-0.5 ">Cakes N  Accessories</span>
+                    </div>
+
                     </div>
                     <p class="text-sm text-gray-500 leading-relaxed mb-5">Professional baking accessories for home bakers and pastry artists. Elevate every bake.</p>
                     <div class="flex gap-2.5">

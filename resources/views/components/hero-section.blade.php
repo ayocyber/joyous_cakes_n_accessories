@@ -7,7 +7,391 @@
 <style>
 
 /* ═══════════════════════════════════
- 
+   HERO
+═══════════════════════════════════ */
+.hero-root {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    font-family: 'Manrope', sans-serif;
+}
+
+/* Slides track */
+.hero-track {
+    display: flex;
+    width: 400%;
+    transition: transform 0.65s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.hero-slide {
+    width: 25%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Full-bleed image */
+.hero-slide-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 8s ease;
+}
+.hero-slide.is-active .hero-slide-img {
+    transform: scale(1.06);
+}
+
+/* Light scrim — white fades in from left & bottom so text stays readable */
+.hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    /* mobile: fade from bottom */
+    background: linear-gradient(
+        to top,
+        rgba(255,255,255,1)   0%,
+        rgba(255,255,255,0.92) 30%,
+        rgba(255,255,255,0.5)  55%,
+        rgba(255,255,255,0.1)  80%,
+        transparent           100%
+    );
+}
+
+/* Desktop: fade from left instead */
+@media (min-width: 768px) {
+    .hero-scrim {
+        background: linear-gradient(
+            to right,
+            rgba(255,255,255,1)   0%,
+            rgba(255,255,255,0.96) 35%,
+            rgba(255,255,255,0.7)  55%,
+            rgba(255,255,255,0.1)  75%,
+            transparent           100%
+        );
+    }
+}
+
+/* Slide body */
+.hero-body {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 580px;
+    padding: 0 24px 48px;
+}
+@media (min-width: 768px) {
+    .hero-body {
+        justify-content: center;
+        min-height: 560px;
+        padding: 80px 64px;
+        max-width: 54%;
+    }
+}
+
+/* Eyebrow tag */
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(124, 58, 237, 0.08);
+    border: 0.5px solid rgba(124, 58, 237, 0.2);
+    border-radius: 4px;
+    padding: 4px 11px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: #6d28d9;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    width: fit-content;
+}
+.hero-tag-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #a78bfa;
+    animation: hdot 2s ease-in-out infinite;
+    flex-shrink: 0;
+}
+@keyframes hdot { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+/* Title */
+.hero-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 1.06;
+    color: #1a0a2e;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+}
+.hero-title i {
+    font-style: italic;
+    color: #7c3aed;
+}
+@media (min-width: 768px) {
+    .hero-title { font-size: 54px; }
+}
+
+/* Description */
+.hero-desc {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.85;
+    margin-bottom: 24px;
+    font-weight: 300;
+    max-width: 360px;
+}
+@media (min-width: 768px) {
+    .hero-desc { font-size: 14px; max-width: 420px; }
+}
+
+/* Pills */
+.hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 26px;
+}
+.hero-pill {
+    font-size: 11px;
+    color: #6d28d9;
+    background: rgba(124, 58, 237, 0.07);
+    border: 0.5px solid rgba(124, 58, 237, 0.18);
+    border-radius: 100px;
+    padding: 4px 12px;
+    font-weight: 500;
+}
+
+/* Buttons */
+.hero-btns {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.hero-btn-main {
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    background: #7c3aed;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 13px 26px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 6px 24px rgba(124,58,237,0.3);
+    letter-spacing: 0.01em;
+}
+.hero-btn-main:hover {
+    background: #6d28d9;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(124,58,237,0.42);
+}
+.hero-btn-ghost {
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    background: transparent;
+    color: #6d28d9;
+    border: 0.5px solid rgba(124,58,237,0.35);
+    border-radius: 6px;
+    padding: 13px 22px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.18s;
+}
+.hero-btn-ghost:hover {
+    background: rgba(124,58,237,0.06);
+    border-color: #7c3aed;
+}
+
+/* Floating badges */
+.hero-badge {
+    position: absolute;
+    z-index: 3;
+    background: #fff;
+    border: 0.5px solid rgba(0,0,0,0.07);
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    min-width: 155px;
+}
+.hero-badge-1 {
+    right: 20px;
+    bottom: 56px;
+    animation: hbadge 4s ease-in-out infinite;
+}
+.hero-badge-2 {
+    right: 20px;
+    top: 64px;
+    animation: hbadge 4s ease-in-out infinite 2s;
+}
+@media (min-width: 768px) {
+    .hero-badge-1 { right: 56px; bottom: 90px; }
+    .hero-badge-2 { right: 56px; top: 110px; }
+}
+@keyframes hbadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+.hero-badge-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: #f5f3ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+.hero-badge-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a1a1a;
+    display: block;
+    line-height: 1.3;
+}
+.hero-badge-sub {
+    font-size: 10px;
+    color: #9ca3af;
+    display: block;
+}
+
+/* Big background number */
+.hero-bignum {
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 140px;
+    line-height: 0.85;
+    color: rgba(124,58,237,0.05);
+    right: 24px;
+    bottom: 60px;
+    letter-spacing: -0.02em;
+    z-index: 1;
+    user-select: none;
+    pointer-events: none;
+}
+@media (min-width: 768px) {
+    .hero-bignum { font-size: 200px; right: 48px; bottom: auto; top: 50%; transform: translateY(-50%); }
+}
+
+/* Vertical side dots */
+.hero-sidedots {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+@media (min-width: 768px) {
+    .hero-sidedots { display: none; }
+}
+.hero-sddot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(124,58,237,0.2);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.hero-sddot.on {
+    height: 18px;
+    border-radius: 2px;
+    background: #7c3aed;
+}
+
+/* Stats belt */
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 0.5px solid rgba(124,58,237,0.1);
+    background: #fff;
+}
+.hero-stat {
+    padding: 14px 8px;
+    text-align: center;
+    border-right: 0.5px solid rgba(124,58,237,0.1);
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat-n {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    color: #7c3aed;
+    display: block;
+    line-height: 1;
+}
+.hero-stat-l {
+    font-size: 9px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+    display: block;
+}
+
+/* Nav strip */
+.hero-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 0 14px;
+    background: #fff;
+}
+.hero-ndot {
+    width: 5px;
+    height: 5px;
+    border-radius: 100px;
+    background: rgba(124,58,237,0.18);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: width 0.3s, background 0.3s;
+}
+.hero-ndot.on { width: 22px; background: #7c3aed; }
+.hero-arr {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(124,58,237,0.07);
+    border: 0.5px solid rgba(124,58,237,0.2);
+    color: #7c3aed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.18s;
+    flex-shrink: 0;
+}
+.hero-arr:hover { background: rgba(124,58,237,0.14); }
+
+/* Progress bar */
+.hero-prog {
+    height: 2px;
+    background: linear-gradient(90deg, #7c3aed, #c084fc, #e879f9);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.04s linear;
+}
+
 /* ── Reveal ── */
 </style>
 @endpush
@@ -23,7 +407,7 @@
 
         <!-- Slide 1 -->
         <div class="hero-slide is-active" id="hsl0">
-            <img class="hero-slide-img" src=" images/Cupcake liners.jpeg " alt="Baking tools flat lay" />
+            <img class="hero-slide-img" src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=1400&q=90" alt="Baking tools flat lay" />
             <div class="hero-scrim"></div>
             <div class="hero-bignum">01</div>
             <div class="hero-body">
@@ -52,7 +436,7 @@
 
         <!-- Slide 2 -->
         <div class="hero-slide" id="hsl1">
-            <img class="hero-slide-img" src="images/Cookies pouch white.jpeg" alt="Beautifully decorated cake" />
+            <img class="hero-slide-img" src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=1400&q=90" alt="Beautifully decorated cake" />
             <div class="hero-scrim"></div>
             <div class="hero-bignum">02</div>
             <div class="hero-body">
@@ -122,12 +506,12 @@
     </div>
 
     <!-- Stats belt -->
-    {{-- <div class="hero-stats">
+    <div class="hero-stats">
         <div class="hero-stat"><span class="hero-stat-n">350+</span><span class="hero-stat-l">Products</span></div>
         <div class="hero-stat"><span class="hero-stat-n">12K+</span><span class="hero-stat-l">Bakers</span></div>
         <div class="hero-stat"><span class="hero-stat-n">36</span><span class="hero-stat-l">States</span></div>
         <div class="hero-stat"><span class="hero-stat-n">24/7</span><span class="hero-stat-l">Orders Open</span></div>
-    </div> --}}
+    </div>
 
     <!-- Nav dots + arrows -->
     <div class="hero-nav">
@@ -307,5 +691,42 @@
 
 {{-- Hero slideshow JS --}}
 <script>
+(function(){
+    var cur = 0, tot = 4, pw = 0, timer;
+
+    function goTo(n) {
+        cur = (n + tot) % tot;
+        document.getElementById('heroTrack').style.transform = 'translateX(-' + (cur * 25) + '%)';
+        document.querySelectorAll('.hero-slide').forEach(function(s, i) {
+            s.className = 'hero-slide' + (i === cur ? ' is-active' : '');
+        });
+        document.querySelectorAll('.hero-ndot').forEach(function(d, i) {
+            d.className = 'hero-ndot' + (i === cur ? ' on' : '');
+        });
+        document.querySelectorAll('.hero-sddot').forEach(function(d, i) {
+            d.className = 'hero-sddot' + (i === cur ? ' on' : '');
+        });
+        pw = 0;
+        document.getElementById('heroProgress').style.width = '0%';
+        clearInterval(timer);
+        timer = setInterval(function() {
+            pw += 0.45;
+            document.getElementById('heroProgress').style.width = Math.min(pw, 100) + '%';
+            if (pw >= 100) goTo(cur + 1);
+        }, 22);
+    }
+
+    document.getElementById('heroPrev').addEventListener('click', function(){ goTo(cur - 1); });
+    document.getElementById('heroNext').addEventListener('click', function(){ goTo(cur + 1); });
+
+    document.querySelectorAll('.hero-ndot').forEach(function(d) {
+        d.addEventListener('click', function(){ goTo(+d.getAttribute('data-i')); });
+    });
+    document.querySelectorAll('.hero-sddot').forEach(function(d) {
+        d.addEventListener('click', function(){ goTo(+d.getAttribute('data-i')); });
+    });
+
+    goTo(0);
+})();
 </script>
 @endpush
