@@ -13,11 +13,30 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->integer('size')->nullable();
-            $table->decimal('price', 8, 2);
 
+            $table->foreignId('category_id')
+                ->constrained()
+                ->cascadeOnDelete();
+        
+            $table->string('name');
+            $table->string('slug')->unique();
+        
+            $table->text('description')->nullable();
+        
+            $table->decimal('price', 12, 2);
+        
+            $table->string('currency', 3)->default('USD');
+        
+            $table->decimal('size_value', 10, 2)->nullable();
+            $table->string('size_unit')->nullable();
+        
+            $table->integer('stock')->default(0);
+        
+            $table->string('sku')->unique();
+        
+            $table->boolean('is_active')->default(true);
+            $table->boolean('featured')->default(false);
+        
             $table->timestamps();
         });
     }
