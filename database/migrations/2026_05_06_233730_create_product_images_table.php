@@ -19,6 +19,8 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->string('image_path');
+            $table->string('alt_text')->nullable();
+            $table->boolean('is_primary')->default(false);
             $table->timestamps();
         });
     }

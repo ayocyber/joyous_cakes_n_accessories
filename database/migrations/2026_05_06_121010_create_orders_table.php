@@ -13,16 +13,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-
             $table->foreignId('customer_id')
                 ->constrained();
-
             $table->decimal('subtotal', 12, 2);
             $table->decimal('shipping_fee', 12, 2)->default(0);
             $table->decimal('total_price', 12, 2);
-
             $table->string('currency', 3)->default('USD');
-
             $table->enum('status', [
                 'pending',
                 'processing',
@@ -30,22 +26,17 @@ return new class extends Migration
                 'delivered',
                 'cancelled'
             ])->default('pending');
-
             $table->enum('payment_status', [
                 'unpaid',
                 'paid',
                 'failed',
                 'refunded'
             ])->default('unpaid');
-
             $table->string('payment_method')->nullable();
-
             $table->timestamp('ordered_at')->useCurrent();
             $table->timestamp('shipped_at')->nullable();
             $table->timestamp('delivered_at')->nullable();
-
             $table->text('notes')->nullable();
-
             $table->timestamps();
         });
     }

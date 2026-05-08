@@ -18,7 +18,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->string('provider');
+            $table->string('payment_method');
             $table->string('transaction_reference')->unique();
 
             $table->decimal('amount', 12, 2);
