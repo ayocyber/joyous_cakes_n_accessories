@@ -123,50 +123,34 @@
                     <!-- Header -->
                     <div class="summary-header">
                         <p class="text-white/70 text-xs font-semibold uppercase tracking-widest mb-0.5">Order Summary</p>
-                        <p class="text-white font-serif text-2xl font-bold" id="summaryTotal">₦0</p>
+                        <p class="text-white font-serif text-2xl font-bold" id="summaryTotal">$0</p>
                         <p class="text-white/60 text-xs mt-1" id="summaryItemCount">0 items in your cart</p>
                     </div>
 
                     <div class="summary-body space-y-2">
 
-                        <!-- Free shipping progress -->
-                        <div class="bg-purple-50 rounded-xl p-3.5 mb-4 border border-purple-100">
-                            <div class="flex justify-between text-xs mb-2">
-                                <span class="font-semibold text-gray-700">🚚 Free Shipping Progress</span>
-                                <span class="font-bold text-plum" id="shippingLeft">₦50,000 away</span>
-                            </div>
-                            <div class="shipping-bar">
-                                <div class="shipping-fill" id="shippingFill" style="width: 0%"></div>
-                            </div>
-                            <p class="text-xs text-gray-400 mt-2">Spend ₦50,000 or more for free delivery</p>
-                        </div>
 
-                        <!-- Coupon -->
-                        <div class="coupon-wrap">
-                            <input type="text" id="couponInput" class="coupon-input" placeholder="Coupon code…">
-                            <button class="coupon-btn" onclick="applyCoupon()">Apply</button>
-                        </div>
 
                         <!-- Line items -->
                         <div class="summary-row">
                             <span>Subtotal</span>
-                            <span class="font-semibold text-gray-800" id="subtotalVal">₦0</span>
+                            <span class="font-semibold text-gray-800" id="subtotalVal">$0</span>
                         </div>
                         <div class="summary-row" id="discountRow" style="display:none;">
                             <span class="text-green-600">Discount</span>
-                            <span class="font-semibold text-green-600" id="discountVal">−₦0</span>
+                            <span class="font-semibold text-green-600" id="discountVal">−$0</span>
                         </div>
                         <div class="summary-row">
                             <span>Shipping</span>
-                            <span class="font-semibold text-gray-800" id="shippingVal">₦1,500</span>
+                            <span class="font-semibold text-gray-800" id="shippingVal">$15</span>
                         </div>
                         <div class="summary-row">
                             <span>VAT (7.5%)</span>
-                            <span class="font-semibold text-gray-800" id="vatVal">₦0</span>
+                            <span class="font-semibold text-gray-800" id="vatVal">$0</span>
                         </div>
                         <div class="summary-row total">
                             <span>Total</span>
-                            <span class="grad-text" id="totalVal">₦0</span>
+                            <span class="grad-text" id="totalVal">$0.00</span>
                         </div>
 
                         <!-- Checkout CTA -->
@@ -236,45 +220,46 @@
                 </a>
             </div>
 
-            @php
-                $recos = [
-                    ['id'=>101,'name'=>'Silicone Bundt Mould','price'=>5500,'old'=>'7,000','emoji'=>'🧁','bg'=>'from-purple-100 to-pink-50','badge'=>'New','stock'=>20],
-                    ['id'=>102,'name'=>'Fondant Smoother Set','price'=>4800,'old'=>'6,500','emoji'=>'🍬','bg'=>'from-fuchsia-50 to-pink-100','badge'=>'Sale','stock'=>15],
-                    ['id'=>103,'name'=>'Offset Spatula Set (3)','price'=>4100,'old'=>null,'emoji'=>'🔪','bg'=>'from-pink-50 to-purple-50','badge'=>null,'stock'=>25],
-                    ['id'=>104,'name'=>"Baker's Starter Kit",'price'=>22000,'old'=>null,'emoji'=>'🎁','bg'=>'from-purple-50 to-indigo-100','badge'=>'Gift','stock'=>8],
-                ];
-            @endphp
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                @foreach($recos as $r)
-                <div class="reco-card">
-                    <div class="reco-img bg-gradient-to-br {{ $r['bg'] }} relative">
-                        {{ $r['emoji'] }}
-                        @if($r['badge'])
-                        <span class="absolute top-2 left-2 text-xs font-bold text-white px-2.5 py-1 rounded-full shadow
-                            {{ $r['badge']==='Sale' ? 'bg-blush' : 'bg-plum' }}">{{ $r['badge'] }}</span>
-                        @endif
-                    </div>
-                    <div class="p-3.5">
-                        <p class="font-medium text-gray-900 text-sm mb-1 truncate">{{ $r['name'] }}</p>
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="font-bold text-plum text-sm">₦{{ number_format($r['price']) }}</span>
-                            @if($r['old'])<span class="text-xs text-gray-400 line-through">₦{{ $r['old'] }}</span>@endif
-                        </div>
-                        <button
-                            class="reco-add-btn w-full btn-primary text-xs font-semibold py-2.5 rounded-full hover:scale-[1.02] transition-transform shadow"
-                            data-id="{{ $r['id'] }}"
-                            data-name="{{ $r['name'] }}"
-                            data-price="{{ $r['price'] }}"
-                            data-stock="{{ $r['stock'] }}"
-                            data-emoji="{{ $r['emoji'] }}"
-                            onclick="handleRecoAdd(this)">
-                            🛒 Add to Cart
-                        </button>
-                    </div>
-                </div>
-                @endforeach
+           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    @forelse($recommendations as $r)
+    @php $bg = ['from-purple-100 to-pink-50','from-fuchsia-50 to-pink-100','from-pink-50 to-purple-50','from-purple-50 to-indigo-100'][($loop->index) % 4]; @endphp
+    <div class="reco-card">
+        <div class="reco-img bg-gradient-to-br {{ $bg }} relative">
+            @if($r->image)
+                <img src="{{ asset('storage/' . $r->image) }}" alt="{{ $r->name }}"
+                     class="w-full h-full object-cover" onerror="this.style.display='none'">
+            @else
+                <span class="text-3xl">🍞</span>
+            @endif
+            @if($r->featured)
+            <span class="absolute top-2 left-2 text-xs font-bold text-white px-2.5 py-1 rounded-full shadow bg-plum">Featured</span>
+            @endif
+        </div>
+        <div class="p-3.5">
+            @if($r->category)
+            <span class="text-xs text-gray-400 uppercase tracking-wide">{{ $r->category->name }}</span>
+            @endif
+            <p class="font-medium text-gray-900 text-sm mb-1 truncate mt-0.5">{{ $r->name }}</p>
+            <div class="flex items-center gap-2 mb-3">
+                <span class="font-bold text-green-700 text-sm">${{ number_format($r->price, 2) }}</span>
             </div>
+            <button
+                class="reco-add-btn w-full btn-primary text-xs font-semibold py-2.5 rounded-full hover:scale-[1.02] transition-transform shadow"
+                data-id="{{ $r->id }}"
+                data-name="{{ $r->name }}"
+                data-price="{{ $r->price }}"
+                data-stock="{{ $r->stock }}"
+                data-image="{{ $r->image ? asset('storage/' . $r->image) : '' }}"
+                data-emoji="🍞"
+                onclick="handleRecoAdd(this)">
+                🛒 Add to Cart
+            </button>
+        </div>
+    </div>
+    @empty
+    <div class="col-span-4 text-center text-gray-400 py-8 text-sm">No recommendations available.</div>
+    @endforelse
+</div>
         </div>
 
     </div>
@@ -299,15 +284,15 @@
 /* ═══════════════════════════════════
    CART PAGE — CONSTANTS & STATE
 ═══════════════════════════════════ */
-const FREE_SHIPPING_THRESHOLD = 50000;
-const SHIPPING_COST           = 1500;
+const FREE_SHIPPING_THRESHOLD = 500;
+const SHIPPING_COST           = 15;
 const VAT_RATE                = 0.075;
 
 let savedItems = {};
 let discount   = 0;
 
 /* ── Number formatter ── */
-function fmt(n) { return '₦' + Math.round(n).toLocaleString('en-NG'); }
+function fmt(n) { return '$' + Math.round(n).toLocaleString('en-NG'); }
 
 /* ════════════════════════════════════
    RENDER CART FROM localStorage
@@ -406,8 +391,6 @@ function updateSummary() {
     const ship    = after >= FREE_SHIPPING_THRESHOLD ? 0 : (after > 0 ? SHIPPING_COST : 0);
     const vat     = after * VAT_RATE;
     const total   = after + ship + vat;
-    const toFree  = Math.max(0, FREE_SHIPPING_THRESHOLD - after);
-    const pct     = Math.min(100, (after / FREE_SHIPPING_THRESHOLD) * 100);
     const count   = Object.values(cart).reduce((s, i) => s + i.qty, 0);
 
     document.getElementById('subtotalVal').textContent  = fmt(sub);

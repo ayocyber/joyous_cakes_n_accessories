@@ -25,9 +25,9 @@ return new class extends Migration
             $table->string('size_unit')->nullable();
             $table->integer('stock')->default(0);
             $table->string('sku')->unique();
+            $table->json('image')->nullable();
             $table->boolean('is_active')->default(true);
             $table->boolean('featured')->default(false);
-        
             $table->timestamps();
         });
     }

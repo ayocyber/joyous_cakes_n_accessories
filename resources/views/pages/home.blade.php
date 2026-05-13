@@ -162,30 +162,105 @@
         </div>
 
 @php
-    $products = [
-        ['id'=>1,'name'=>'Paper box','price'=>8500,'old'=>'11,000','badge'=>'Bestseller','stars'=>5,'reviews'=>213,'image'=>'images/6_6_6_ paper-boxes.jpeg','bg'=>'from-purple-50 to-purple-100','stock'=>20],
-        ['id'=>2,'name'=>'White Cake Board','price'=>6200,'old'=>null,'badge'=>'Popular','stars'=>5,'reviews'=>142,'image'=>'images/8_,10_,12,14_,16_  white cake boards.jpeg','bg'=>'from-pink-50 to-rose-100','stock'=>15],
-        ['id'=>3,'name'=>'Birthday Coin Toppers','price'=>4800,'old'=>'6,500','badge'=>'Sale','stars'=>4,'reviews'=>89,'image'=>'images/Birthday-coin-toppers.jpeg','bg'=>'from-fuchsia-50 to-pink-100','stock'=>30],
-        ['id'=>4,'name'=>'Birthday Toppers','price'=>15000,'old'=>null,'badge'=>'Premium','stars'=>5,'reviews'=>367,'image'=>'images/Birthday-toppers 2.jpeg','bg'=>'from-indigo-50 to-purple-100','stock'=>10],
-        ['id'=>5,'name'=>'Cake Dowel','price'=>5500,'old'=>'7,000','badge'=>'New','stars'=>5,'reviews'=>54,'image'=>'images/Cake dowel.jpeg','bg'=>'from-purple-100 to-pink-50','stock'=>25],
-        ['id'=>6,'name'=>'Whipped Cream Powder','price'=>3200,'old'=>null,'badge'=>null,'stars'=>4,'reviews'=>71,'image'=>'images/Whipped cream powder 3.jpeg','bg'=>'from-rose-50 to-pink-100','stock'=>18],
-        ['id'=>7,'name'=>'Christmas Cookies Pouch','price'=>4100,'old'=>'5,500','badge'=>'Sale','stars'=>5,'reviews'=>98,'image'=>'images/Christmas cookies or snacks pouch.jpeg','bg'=>'from-pink-50 to-purple-50','stock'=>12],
-        ['id'=>8,'name'=>'Crowns','price'=>22000,'old'=>null,'badge'=>'Gift','stars'=>5,'reviews'=>201,'image'=>'images/Crowns.jpeg','bg'=>'from-purple-50 to-indigo-100','stock'=>8],
-    ];
+    $bgColors = ['from-purple-50 to-purple-100','from-pink-50 to-rose-100','from-fuchsia-50 to-pink-100','from-indigo-50 to-purple-100'];
 @endphp
 
-   <script>
-                    window.SHOP_PRODUCTS = @json($products);
-                </script>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+    @forelse($featured as $i => $p)
+    @php
+        $badge = $p->featured ? 'Featured' : ($p->stock < 5 ? 'Low Stock' : null);
+        $bg = $bgColors[$loop->index % count($bgColors)];
+    @endphp
 
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
-            @foreach($products as $i => $p)
-                <x-product-card :product="$p" :index="$i" :delay="($i % 4) + 1" />
-            @endforeach
+    <div class="product-card reveal" data-delay="{{ ($loop->index % 4) + 1 }}">
+
+        {{-- Image --}}
+        <div class="product-img-wrap bg-gradient-to-br {{ $bg }} relative overflow-hidden rounded-t-2xl">
+            @if($p->image)
+                <img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->name }}"
+                     class="w-full h-48 object-cover" onerror="this.style.display='none'">
+            @else
+                <div class="w-full h-48 flex items-center justify-center text-4xl text-gray-300">🍞</div>
+            @endif
+
+            @if($badge)
+            <span class="absolute top-3 left-3 text-xs font-bold px-2.5 py-1 rounded-full shadow
+                {{ $badge === 'Featured' ? 'bg-purple-100 text-purple-800' : 'bg-green-100 text-green-800' }}">
+                {{ $badge }}
+            </span>
+            @endif
+
+            <button class="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center shadow hover:bg-white transition-all text-gray-400 hover:text-rose-500">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
         </div>
 
+        {{-- Details --}}
+        <div class="p-4 flex flex-col gap-1.5">
+
+            @if($p->category)
+            <span class="text-xs text-gray-400 uppercase tracking-widest font-medium">{{ $p->category->name }}</span>
+            @endif
+
+            <p class="font-serif font-bold text-gray-900 text-sm leading-snug">{{ $p->name }}</p>
+
+            @if($p->description)
+            <p class="text-xs text-gray-500 leading-relaxed line-clamp-2">{{ $p->description }}</p>
+            @endif
+
+            <div class="flex items-center gap-2 flex-wrap mt-1">
+                <span class="text-base font-bold text-green-700">${{ number_format($p->price , 2) }}</span>
+                @if($p->size_value)
+                <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">{{ $p->size_value }} {{ $p->size_unit }}</span>
+                @endif
+            </div>
+
+            <div class="flex items-center gap-1.5 text-xs">
+                @if($p->stock === 0)
+                    <span class="w-2 h-2 rounded-full bg-red-400 inline-block"></span>
+                    <span class="text-red-500">Out of stock</span>
+                @elseif($p->stock < 5)
+                    <span class="w-2 h-2 rounded-full bg-orange-400 inline-block"></span>
+                    <span class="text-orange-500">Only {{ $p->stock }} left</span>
+                @else
+                    <span class="w-2 h-2 rounded-full bg-green-500 inline-block"></span>
+                    <span class="text-gray-500">In stock</span>
+                @endif
+            </div>
+
+            <button
+                class="add-to-cart-btn mt-2 w-full border border-purple-500 text-gray-800 text-xs font-semibold py-2.5 rounded-xl hover:bg-purple-50 transition-all
+                       {{ $p->stock === 0 ? 'opacity-40 cursor-not-allowed' : '' }}"
+                data-id="{{ $p->id }}"
+                data-name="{{ $p->name }}"
+                data-price="{{ number_format($p->price, 2) }}"
+                data-stock="{{ $p->stock }}"
+                data-image="{{ $p->image ? asset('storage/' . $p->image) : '' }}"
+                data-badge="{{ $badge ?? '' }}"
+                {{ $p->stock === 0 ? 'disabled' : '' }}
+                onclick="handleAddToCart(this)">
+                <span class="btn-label flex items-center justify-center gap-1.5">
+                    🛒 {{ $p->stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
+                </span>
+                <span class="btn-label-added">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    Added!
+                </span>
+            </button>
+        </div>
     </div>
-</section>
+
+    @empty
+    {{-- No featured products yet --}}
+    <div class="col-span-4 text-center py-16 text-gray-400">
+        <p class="text-4xl mb-3">🍞</p>
+        <p class="text-sm">No featured products yet — mark some as featured in the admin panel.</p>
+        <a href="/shop" class="mt-4 inline-block text-xs font-semibold text-plum hover:underline">Browse all products →</a>
+    </div>
+    @endforelse
+</div>
+
+    </div>
 
 
 <!-- ══════════════════════════════════
@@ -283,25 +358,7 @@
 @endsection
 
 @push('scripts')
-@php
-        $productsJson = array_values(array_map(function($p) {
-            return [
-                'id'      => $p['id'],
-                'name'    => $p['name'],
-                'price'   => (string) $p['price'],
-                'old'     => isset($p['old']) ? (string) $p['old'] : null,
-                'badge'   => $p['badge'] ?? null,
-                'stars'   => $p['stars'],
-                'reviews' => $p['reviews'],
-                'image'   => asset($p['image']),
-                'stock'   => $p['stock'] ?? 99,
-                'emoji'   => $p['emoji'] ?? '📦',
-            ];
-        }, $products));
-@endphp
-<script>
-    window.PRODUCTS = @json($productsJson);
-</script>
+
 <script src="{{ asset('js/cart-utils.js') }}"></script>
 <script src="{{ asset('js/product-card.js') }}"></script>
 

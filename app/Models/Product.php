@@ -11,7 +11,7 @@ class Product extends Model
         'name',
         'slug',
         'description',
-        'images',
+        'image',
         'price',
         'currency',
         'size_value',
@@ -27,10 +27,10 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function images()
-    {
-        return $this->hasMany(ProductImage::class);
-    }
+    // public function images()
+    // {
+    //     return $this->hasMany(ProductImage::class);
+    // }
 
     public function orderItems()
     {

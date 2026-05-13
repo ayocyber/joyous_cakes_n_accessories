@@ -1,20 +1,18 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('pages.home');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/shop', function () {
-    return view('pages.Shop');
-})->name('shop');
+Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 
 
 Route::get('/contact', function () {
     return view('pages.Contact');
 })->name('contact');
 
-Route::get('/cart', function () {
-    return view('pages.Cart');
-})->name('cart');
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
