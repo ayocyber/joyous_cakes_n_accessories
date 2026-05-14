@@ -29,7 +29,11 @@ class ProductForm
                     ->columnSpanFull(),
                 FileUpload::make('image')
                     ->image()
-                    ->directory('products'),
+                    ->disk('public')
+                    ->directory('products')
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+                    ->maxSize(2048)
+                    ->required(fn (string $operation): bool => $operation === 'create'),
                 TextInput::make('price')
                     ->required()
                     ->numeric(),
