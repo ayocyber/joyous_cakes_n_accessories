@@ -29,8 +29,7 @@ class ProductForm
                     ->columnSpanFull(),
                 FileUpload::make('image')
                     ->image()
-                    ->directory('products')
-                    ->required(),
+                    ->directory('products'),
                 TextInput::make('price')
                     ->required()
                     ->numeric(),
