@@ -17,7 +17,9 @@ class ProductInfolist
                     ->numeric(),
                 TextEntry::make('name'),
                 TextEntry::make('slug'),
-                ImageEntry::make('image')
+                ImageEntry::make('image_path')
+                     ->disk('public')
+                     ->directory('products')
                     ->square(),
                 TextEntry::make('price')
                     ->money(),

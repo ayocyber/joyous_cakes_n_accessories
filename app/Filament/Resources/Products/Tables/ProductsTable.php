@@ -24,7 +24,7 @@ class ProductsTable
                     ->searchable(),
                 TextColumn::make('slug')
                     ->searchable(),
-                ImageColumn::make('image')
+                ImageColumn::make('image_path')
                     ->square(),
                 TextColumn::make('price')
                     ->money()

@@ -19,6 +19,6 @@ class ShopController extends Controller
         $q->where('is_active', true);
          }])->get();
 
-        return view('pages.Shop', compact('products', 'categories'));
+        return view('pages.shop', compact('products', 'categories'));
     }
 }
