@@ -123,7 +123,7 @@
                     <!-- Header -->
                     <div class="summary-header">
                         <p class="text-white/70 text-xs font-semibold uppercase tracking-widest mb-0.5">Order Summary</p>
-                        <p class="text-white font-serif text-2xl font-bold" id="summaryTotal">$0</p>
+                        <p class="text-white font-serif text-2xl font-bold" id="summaryTotal">L$0</p>
                         <p class="text-white/60 text-xs mt-1" id="summaryItemCount">0 items in your cart</p>
                     </div>
 
@@ -134,23 +134,23 @@
                         <!-- Line items -->
                         <div class="summary-row">
                             <span>Subtotal</span>
-                            <span class="font-semibold text-gray-800" id="subtotalVal">$0</span>
+                            <span class="font-semibold text-gray-800" id="subtotalVal">L$0</span>
                         </div>
                         <div class="summary-row" id="discountRow" style="display:none;">
                             <span class="text-green-600">Discount</span>
-                            <span class="font-semibold text-green-600" id="discountVal">−$0</span>
+                            <span class="font-semibold text-green-600" id="discountVal">−L$0</span>
                         </div>
                         <div class="summary-row">
                             <span>Shipping</span>
-                            <span class="font-semibold text-gray-800" id="shippingVal">$15</span>
+                            <span class="font-semibold text-gray-800" id="shippingVal">L$15</span>
                         </div>
                         <div class="summary-row">
                             <span>VAT (7.5%)</span>
-                            <span class="font-semibold text-gray-800" id="vatVal">$0</span>
+                            <span class="font-semibold text-gray-800" id="vatVal">L$0</span>
                         </div>
                         <div class="summary-row total">
                             <span>Total</span>
-                            <span class="grad-text" id="totalVal">$0.00</span>
+                            <span class="grad-text" id="totalVal">L$0.00</span>
                         </div>
 
                         <!-- Checkout CTA -->
@@ -241,7 +241,7 @@
             @endif
             <p class="font-medium text-gray-900 text-sm mb-1 truncate mt-0.5">{{ $r->name }}</p>
             <div class="flex items-center gap-2 mb-3">
-                <span class="font-bold text-green-700 text-sm">${{ number_format($r->price, 2) }}</span>
+                <span class="font-bold text-green-700 text-sm">L${{ number_format($r->price, 2) }}</span>
             </div>
             <button
                 class="reco-add-btn w-full btn-primary text-xs font-semibold py-2.5 rounded-full hover:scale-[1.02] transition-transform shadow"
@@ -292,7 +292,7 @@ let savedItems = {};
 let discount   = 0;
 
 /* ── Number formatter ── */
-function fmt(n) { return '$' + Math.round(n).toLocaleString('en-NG'); }
+function fmt(n) { return 'L$' + Math.round(n).toLocaleString('en-LR'); }
 
 /* ════════════════════════════════════
    RENDER CART FROM localStorage

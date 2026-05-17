@@ -117,50 +117,51 @@
                 max-h-0 lg:max-h-none
                 space-y-5">
         {{-- Search --}}
-<div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
-    <span class="filter-label">Search</span>
-    <div class="relative">
-        <input type="text" placeholder="Search products…"
-            class="w-full bg-purple-50 border border-purple-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-plum focus:ring-2 focus:ring-purple-100 transition-all pr-9 placeholder-gray-400">
-        <svg class="w-4 h-4 text-plum absolute right-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-        </svg>
-    </div>
-</div>
+   <form id="filterForm" method="GET" action="{{ route('shop') }}">
 
-{{-- Categories --}}
-<div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
-    <span class="filter-label">Categories</span>
-    <div class="space-y-1 mt-2">
-        <label class="check-item">
-            <input type="radio" name="category" value="" checked class="accent-plum">
-            <span class="text-sm text-gray-600 flex-1">All Products</span>
-        </label>
-        @foreach($categories as $cat)
-        <label class="check-item">
-            <input type="radio" name="category" value="{{ $cat->id }}" class="accent-plum">
-            <span class="text-sm text-gray-600 flex-1">{{ $cat->name }}</span>
-            <span class="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">{{ $cat->products_count }}</span>
-        </label>
-        @endforeach
+    {{-- Search --}}
+    <div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
+        <span class="filter-label">Search</span>
+        <div class="relative">
+            <input type="text" name="search" 
+                placeholder="Search products…"
+                value="{{ request('search') }}"
+                class="w-full bg-purple-50 border border-purple-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-plum focus:ring-2 focus:ring-purple-100 transition-all pr-9 placeholder-gray-400">
+            <svg class="w-4 h-4 text-plum absolute right-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+        </div>
     </div>
-</div>
 
-{{-- Price Range --}}
-<div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
-    <span class="filter-label">Price Range</span>
-    <input type="range" min="0" max="50000" value="25000" class="price-range my-2" id="priceRange">
-    <div class="flex justify-between text-xs text-gray-500 mt-1">
-        <span>L$0</span>
-        <span class="font-semibold text-plum" id="priceVal">L$250</span>
-        <span>L$500</span>
+    {{-- Categories --}}
+    <div class="filter-section bg-white p-5 shadow-sm border border-purple-50">
+        <span class="filter-label">Categories</span>
+        <div class="space-y-1 mt-2">
+            <label class="check-item">
+                <input type="radio" name="category" value="" 
+                    {{ !request('category') ? 'checked' : '' }} 
+                    class="accent-plum">
+                <span class="text-sm text-gray-600 flex-1">All Products</span>
+            </label>
+            @foreach($categories as $cat)
+            <label class="check-item">
+                <input type="radio" name="category" value="{{ $cat->id }}" 
+                    {{ request('category') == $cat->id ? 'checked' : '' }}
+                    class="accent-plum">
+                <span class="text-sm text-gray-600 flex-1">{{ $cat->name }}</span>
+                <span class="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">{{ $cat->products_count }}</span>
+            </label>
+            @endforeach
+        </div>
     </div>
-</div>
 
-{{-- Clear filters --}}
-<button class="w-full border-2 border-purple-200 text-plum font-semibold py-3 rounded-xl text-sm hover:bg-plum hover:text-white hover:border-plum transition-all">
-    Clear All Filters
-</button>
+    {{-- Clear filters --}}
+    <a href="{{ route('shop') }}" 
+        class="block text-center w-full border-2 border-purple-200 text-plum font-semibold py-3 rounded-xl text-sm hover:bg-plum hover:text-white hover:border-plum transition-all">
+        Clear All Filters
+    </a>
+
+</form>
     </div>
 </aside>
 
@@ -170,16 +171,15 @@
 
                 <!-- Toolbar -->
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-7 bg-white border border-purple-50 rounded-2xl px-5 py-3.5 shadow-sm">
-                    <p class="text-sm text-gray-500"><span class="font-semibold text-gray-800">350</span> products found</p>
+                    <p class="text-sm text-gray-500"><span class="font-semibold text-gray-800">{{ $products->total() }}</span> products found</p>
                     <div class="flex items-center gap-3 flex-wrap">
-                        <select class="sort-select" aria-label="Sort by">
-                            <option>Sort: Featured</option>
-                            <option>Price: Low to High</option>
-                            <option>Price: High to Low</option>
-                            <option>Newest First</option>
-                            <option>Best Rated</option>
-                            <option>Most Popular</option>
-                        </select>
+                       {{-- <select name="sort" class="sort-select" aria-label="Sort by"
+                        onchange="document.getElementById('filterForm').submit()">
+                        <option value="featured"   {{ request('sort') == 'featured'   ? 'selected' : '' }}>Sort: Featured</option>
+                        <option value="price_asc"  {{ request('sort') == 'price_asc'  ? 'selected' : '' }}>Price: Low to High</option>
+                        <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Price: High to Low</option>
+                        <option value="newest"     {{ request('sort') == 'newest'     ? 'selected' : '' }}>Newest First</option>
+                        </select> --}}
                         <!-- View toggle -->
                         <div class="flex border border-purple-100 rounded-xl overflow-hidden bg-white">
                             <button id="gridView" class="p-2 bg-plum text-white transition-colors" title="Grid view">
@@ -264,7 +264,7 @@
 
         {{-- Price + Size --}}
         <div class="flex items-center gap-2 flex-wrap mt-1">
-            <span class="text-base font-bold text-green-700">${{ number_format($p->price, 2) }}</span>
+            <span class="text-base font-bold text-green-700">L${{ number_format($p->price, 2) }}</span>
             @if($p->size_value)
             <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">{{ $p->size_value }} {{ $p->size_unit }}</span>
             @endif
@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pv = document.getElementById('priceVal');
     if (pr && pv) {
         pr.addEventListener('input', () => {
-            pv.textContent = '₦' + parseInt(pr.value).toLocaleString();
+            pv.textContent = 'L$' + parseInt(pr.value).toLocaleString();
         });
     }
 
@@ -448,6 +448,21 @@ function showToast(icon, title, msg) {
         t.classList.add('translate-y-24', 'opacity-0');
         t.classList.remove('translate-y-0', 'opacity-100');
     }, 3500);
+}
+// Auto-submit on category or price change
+document.querySelectorAll('input[name="category"]').forEach(r => {
+    r.addEventListener('change', () => document.getElementById('filterForm').submit());
+});
+
+
+// Search: submit on Enter or after short pause
+const searchInput = document.querySelector('input[name="search"]');
+if (searchInput) {
+    let t;
+    searchInput.addEventListener('input', () => {
+        clearTimeout(t);
+        t = setTimeout(() => document.getElementById('filterForm').submit(), 600);
+    });
 }
 </script>
 @endpush

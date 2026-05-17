@@ -36,7 +36,7 @@
                     <span class="hero-pill">Open 24/7</span>
                 </div>
                 <div class="hero-btns">
-                    <a href="/shop" class="hero-btn-main">Shop Now <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <a href="/shop" class="hero-btn-main">Shop Now <i class="bi bi-arrow-right"></i></a>
                     <a href="#products" class="hero-btn-ghost">Browse All</a>
                 </div>
             </div>
@@ -209,7 +209,7 @@
             @endif
 
             <div class="flex items-center gap-2 flex-wrap mt-1">
-                <span class="text-base font-bold text-green-700">${{ number_format($p->price , 2) }}</span>
+                <span class="text-base font-bold text-green-700">L${{ number_format($p->price , 2) }}</span>
                 @if($p->size_value)
                 <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">{{ $p->size_value }} {{ $p->size_unit }}</span>
                 @endif
