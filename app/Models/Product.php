@@ -22,6 +22,12 @@ class Product extends Model
         'featured',
     ];
 
+    protected $casts = [
+        'image_path' => 'array',
+        'is_active' => 'boolean',
+        'featured' => 'boolean',
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);

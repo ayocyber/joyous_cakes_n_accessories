@@ -277,8 +277,8 @@
 @endsection
 
 @push('scripts')
-<script src="/js/cart-utils.js"></script>
-<script src="/js/product-card.js"></script>  
+<!-- <script src="/js/cart-utils.js"></script>
+<script src="/js/product-card.js"></script>   -->
 
 <script>
 /* ═══════════════════════════════════
@@ -558,6 +558,7 @@ function handleRecoAdd(btn) {
         name:  btn.dataset.name,
         price: Number(btn.dataset.price),
         stock: Number(btn.dataset.stock),
+        image: btn.dataset.image || '',
         emoji: btn.dataset.emoji,
         badge: '',
     };

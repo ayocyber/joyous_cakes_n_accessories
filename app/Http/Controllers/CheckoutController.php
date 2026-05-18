@@ -17,7 +17,7 @@ class CheckoutController extends Controller
         $cart = session()->get('cart', []);
 
         if (empty($cart)) {
-            return redirect()->route('cart.index')
+            return redirect()->route('cart')
                 ->with('error', 'Your cart is empty.');
         }
 
@@ -53,7 +53,7 @@ class CheckoutController extends Controller
         $cart = session()->get('cart', []);
 
         if (empty($cart)) {
-            return redirect()->route('cart.index')
+            return redirect()->route('cart')
                 ->with('error', 'Your cart is empty.');
         }
 
