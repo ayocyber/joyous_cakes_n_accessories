@@ -11,7 +11,7 @@ class Product extends Model
         'name',
         'slug',
         'description',
-        'image',
+        'image_path',
         'price',
         'currency',
         'size_value',
@@ -20,6 +20,12 @@ class Product extends Model
         'sku',
         'is_active',
         'featured',
+    ];
+
+    protected $casts = [
+        'image_path' => 'array',
+        'is_active' => 'boolean',
+        'featured' => 'boolean',
     ];
 
     public function category()

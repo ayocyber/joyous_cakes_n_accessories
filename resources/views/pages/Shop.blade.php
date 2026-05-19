@@ -200,7 +200,7 @@
             'price' => $p->price,
             'stock' => $p->stock,
             'badge' => $p->featured ? 'Featured' : ($p->stock < 5 ? 'Low Stock' : null),
-            'image' => $p->image ?? '',
+            'image' => $p->image_path ?? '',
         ];
     });
 @endphp
@@ -337,7 +337,6 @@
 
 @endsection
 @push('scripts')
-<script src="/js/cart-utils.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {

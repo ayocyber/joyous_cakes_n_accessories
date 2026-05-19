@@ -359,8 +359,6 @@
 
 @push('scripts')
 
-<script src="{{ asset('js/cart-utils.js') }}"></script>
-<script src="{{ asset('js/product-card.js') }}"></script>
 
 {{-- Hero slideshow JS --}}
 <script>

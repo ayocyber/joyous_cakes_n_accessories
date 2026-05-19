@@ -24,8 +24,8 @@ return new class extends Migration
             $table->decimal('size_value', 10, 2)->nullable();
             $table->string('size_unit')->nullable();
             $table->integer('stock')->default(0);
-            $table->string('sku')->unique();
-            $table->json('image')->nullable();
+            $table->string('sku')->unique()->nullable();
+            $table->json('image_path')->nullable();
             $table->boolean('is_active')->default(true);
             $table->boolean('featured')->default(false);
             $table->timestamps();

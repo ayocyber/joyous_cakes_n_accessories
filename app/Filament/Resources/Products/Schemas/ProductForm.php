@@ -27,12 +27,12 @@ class ProductForm
                 Textarea::make('description')
                     ->default(null)
                     ->columnSpanFull(),
-                FileUpload::make('image')
+                FileUpload::make('image_path')
                     ->image()
                     ->disk('public')
                     ->directory('products')
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
-                    ->maxSize(2048)
+                    ->visibility('public')
+                    ->preserveFilenames()
                     ->required(fn (string $operation): bool => $operation === 'create'),
                 TextInput::make('price')
                     ->required()
@@ -55,8 +55,7 @@ class ProductForm
                     ->numeric()
                     ->default(0),
                 TextInput::make('sku')
-                    ->label('SKU')
-                    ->required(),
+                    ->label('SKU'),
                 Toggle::make('is_active')
                     ->required(),
                 Toggle::make('featured')

@@ -50,6 +50,6 @@ class ShopController extends Controller
         $products   = $query->paginate(12)->withQueryString();
         $categories = Category::withCount('products')->get();
 
-        return view('pages.Shop', compact('products', 'categories'));
+        return view('pages.shop', compact('products', 'categories'));
     }
 }
