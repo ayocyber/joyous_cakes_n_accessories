@@ -1,5 +1,7 @@
-
 (function(){
+    // ✅ If hero slider doesn't exist on this page, stop here
+    if (!document.getElementById('heroPrev')) return;
+
     var cur = 0, tot = 4, pw = 0, timer;
 
     function goTo(n) {

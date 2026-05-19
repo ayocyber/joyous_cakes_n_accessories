@@ -154,11 +154,11 @@
                         </div>
 
                         <!-- Checkout CTA -->
-                        <a href="/checkout"
+                        <button type="button" onclick="checkoutNow()"
                            class="checkout-btn w-full btn-primary font-bold py-4 rounded-full shadow-xl hover:scale-[1.02] transition-all text-sm flex items-center justify-center gap-2 mt-3">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                             Proceed to Checkout
-                        </a>
+                        </button>
 
                         <!-- Payment icons -->
                         <div class="flex items-center justify-center gap-2 mt-3 flex-wrap">
@@ -292,11 +292,22 @@ let savedItems = {};
 let discount   = 0;
 
 /* ── Number formatter ── */
-function fmt(n) { return 'L$' + Math.round(n).toLocaleString('en-LR'); }
-
+function fmt(n) { return 'L$' + Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
 /* ════════════════════════════════════
    RENDER CART FROM localStorage
 ════════════════════════════════════ */
+function checkoutNow() {
+    const cart = CartUtils.getCart();
+
+    if (!Object.keys(cart).length) {
+        showToast('⚠️', 'Cart empty', 'Add some items before checking out.');
+        return;
+    }
+
+    // ✅ Just go to the checkout form page
+    window.location.href = '/checkout';
+}
+
 function renderCart() {
     const cart      = CartUtils.getCart();
     const skeleton  = document.getElementById('cartSkeleton');
@@ -398,17 +409,10 @@ function updateSummary() {
     document.getElementById('shippingVal').textContent  = ship === 0 && after > 0 ? 'FREE 🎉' : fmt(ship);
     document.getElementById('totalVal').textContent     = fmt(total);
     document.getElementById('summaryTotal').textContent = fmt(total);
-    document.getElementById('shippingFill').style.width = pct + '%';
-    document.getElementById('shippingLeft').textContent = toFree > 0 ? fmt(toFree) + ' away' : 'You have free shipping! 🎉';
     document.getElementById('cartCountBadge').textContent   = count;
     document.getElementById('summaryItemCount').textContent = count + ' item' + (count !== 1 ? 's' : '') + ' in your cart';
 
-    if (disc > 0) {
-        document.getElementById('discountRow').style.display = 'flex';
-        document.getElementById('discountVal').textContent = '−' + fmt(disc);
-    } else {
-        document.getElementById('discountRow').style.display = 'none';
-    }
+
 }
 
 /* ════════════════════════════════════
@@ -570,19 +574,9 @@ function handleRecoAdd(btn) {
 }
 
 /* ── Coupon ── */
-function applyCoupon() {
-    const code  = document.getElementById('couponInput').value.trim().toUpperCase();
-    const valid = { 'BAKE10': 0.10, 'SWEET15': 0.15, 'BAKER20': 0.20 };
-    if (valid[code]) {
-        discount = valid[code];
-        showToast('🎉', 'Coupon applied!', Math.round(discount * 100) + '% discount added.');
-        updateSummary();
-    } else {
-        showToast('❌', 'Invalid code', 'Try BAKE10, SWEET15 or BAKER20.');
-    }
-}
 
-document.getElementById('couponInput')?.addEventListener('keydown', e => { if (e.key === 'Enter') applyCoupon(); });
+
+
 
 /* ── Toast ── */
 function showToast(icon, title, msg) {

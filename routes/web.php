@@ -26,3 +26,6 @@ Route::post('/checkout/manual', [CheckoutController::class, 'manualCheckout'])
 
 Route::post('/checkout/paystack', [CheckoutController::class, 'paystackCheckout'])
     ->name('checkout.paystack');
+
+
+Route::get('/order-success/{order}', [CheckoutController::class, 'success']);
