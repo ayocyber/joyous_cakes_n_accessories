@@ -93,9 +93,9 @@
  
         <nav class="flex items-center gap-2 text-xs text-gray-400 mb-6">
             <a href="/" class="hover:text-plum transition-colors">Home</a>
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <i class="bi bi-chevron-right"></i>
             <a href="{{ route('cart') }}" class="hover:text-plum transition-colors">Cart</a>
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <i class="bi bi-chevron-right"></i>
             <span class="text-plum font-semibold">Checkout</span>
         </nav>
  
@@ -245,7 +245,7 @@
                                         <p class="text-lg font-bold text-gray-900 tracking-widest" id="acctNum">3012345678</p>
                                     </div>
                                     <button type="button" class="copy-btn" onclick="copyAcct()">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                        <i class="bi bi-files"></i>
                                         Copy
                                     </button>
                                 </div>
@@ -262,7 +262,7 @@
                         </div>
  
                         <button type="button" id="transferBtn" class="transfer-btn" onclick="placeOrder(this, event)">
-                            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <i class="bi bi-check-circle"></i>
                             I have made the transfer
                         </button>
  
@@ -333,7 +333,7 @@
  
                         <a href="{{ route('cart') }}"
                            class="flex items-center justify-center gap-1.5 text-xs font-semibold text-plum hover:text-blush transition-colors mt-1 group">
-                            <svg class="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                            <i class="bi bi-chevron-left"></i>
                             Edit cart
                         </a>
  
@@ -492,10 +492,7 @@ function placeOrder(btn, event) {
     // 3. Loading state
     btn.disabled = true;
     btn.innerHTML = `
-        <svg class="w-5 h-5 animate-spin shrink-0" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-        </svg>
+       <i class="bi bi-arrow-repeat"></i>
         Recording your order…`;
  
     // 4. POST to server
@@ -516,7 +513,7 @@ function placeOrder(btn, event) {
             showToast('❌', 'Error', data.message || 'Checkout failed. Please try again.');
             btn.disabled = false;
             btn.innerHTML = `
-                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+               <i class="bi bi-check-circle"></i>
                 I have made the transfer`;
         }
     })
@@ -524,7 +521,7 @@ function placeOrder(btn, event) {
         showToast('❌', 'Network error', 'Something went wrong. Please check your connection.');
         btn.disabled = false;
         btn.innerHTML = `
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+           <i class="bi bi-check-circle"></i>
             I have made the transfer`;
     });
 }

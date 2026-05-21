@@ -51,7 +51,7 @@
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-gray-400 mb-7">
             <a href="/" class="hover:text-plum transition-colors">Home</a>
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <i class="bi bi-chevron-right"></i>
             <span class="text-plum font-semibold">Shop</span>
         </nav>
 
@@ -98,16 +98,11 @@
         <button id="filterToggle"
             class="w-full flex items-center justify-between bg-white border border-purple-100 rounded-2xl px-5 py-3.5 shadow-sm text-sm font-semibold text-gray-800">
             <span class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-plum" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/>
-                </svg>
+               <i class="bi bi-funnel"></i>
                 Filters
             </span>
             <span id="filterBadge" class="hidden bg-plum text-white text-xs font-bold px-2 py-0.5 rounded-full">3</span>
-            <svg id="filterChevron" class="w-4 h-4 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-            </svg>
+          <i class="bi bi-chevron-down"></i>
         </button>
     </div>
 
@@ -127,9 +122,7 @@
                 placeholder="Search products…"
                 value="{{ request('search') }}"
                 class="w-full bg-purple-50 border border-purple-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-plum focus:ring-2 focus:ring-purple-100 transition-all pr-9 placeholder-gray-400">
-            <svg class="w-4 h-4 text-plum absolute right-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
+            <i class="bi bi-search absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
         </div>
     </div>
 
@@ -183,10 +176,10 @@
                         <!-- View toggle -->
                         <div class="flex border border-purple-100 rounded-xl overflow-hidden bg-white">
                             <button id="gridView" class="p-2 bg-plum text-white transition-colors" title="Grid view">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                               <i class="bi bi-grid-3x3-gap"></i>
                             </button>
                             <button id="listView" class="p-2 text-gray-400 hover:text-plum transition-colors" title="List view">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                                <i class="bi bi-list"></i>
                             </button>
                         </div>
                     </div>
@@ -242,7 +235,7 @@
         @endif
 
         <button class="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center shadow hover:bg-white transition-all text-gray-400 hover:text-rose-500">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            <i class="bi bi-heart"></i>
         </button>
     </div>
 
@@ -300,7 +293,7 @@
                 🛒 {{ $p->stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
             </span>
             <span class="btn-label-added">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <i class="bi bi-check-lg"></i>
                 Added!
             </span>
         </button>

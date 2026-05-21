@@ -36,9 +36,9 @@
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-gray-400 mb-6">
             <a href="/" class="hover:text-plum transition-colors">Home</a>
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <i class="bi bi-chevron-right"></i>
             <a href="/shop" class="hover:text-plum transition-colors">Shop</a>
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <i class="bi bi-chevron-right"></i>
             <span class="text-plum font-semibold">Cart</span>
         </nav>
 
@@ -51,7 +51,7 @@
                 </h1>
             </div>
             <a href="/shop" class="flex items-center gap-2 text-sm font-semibold text-plum hover:text-blush transition-colors group">
-                <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
+                <i class="bi bi-chevron-left"></i>
                 Continue Shopping
             </a>
         </div>
@@ -97,7 +97,7 @@
                     <p class="text-gray-400 text-sm mb-8 max-w-xs mx-auto">Looks like you haven't added anything yet. Explore our collection and find something you'll love!</p>
                     <a href="/shop" class="btn-primary px-8 py-4 rounded-full font-semibold text-sm inline-flex items-center gap-2 shadow-xl hover:scale-105 transition-all">
                         <span>Start Shopping</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        <i class="bi bi-chevron-right"></i>
                     </a>
                 </div>
 
@@ -156,7 +156,7 @@
                         <!-- Checkout CTA -->
                         <button type="button" onclick="checkoutNow()"
                            class="checkout-btn w-full btn-primary font-bold py-4 rounded-full shadow-xl hover:scale-[1.02] transition-all text-sm flex items-center justify-center gap-2 mt-3">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            <i class="bi bi-chevron-right"></i>
                             Proceed to Checkout
                         </button>
 
@@ -216,7 +216,7 @@
                 </div>
                 <a href="/shop" class="text-sm font-semibold text-plum hover:text-blush flex items-center gap-1 group transition-colors">
                     See All
-                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
 
@@ -361,7 +361,7 @@ function buildItemCard(item) {
                         <p class="font-serif font-bold text-gray-900 text-base mt-1.5 leading-tight">${item.name}</p>
                     </div>
                     <button class="remove-btn" onclick="removeItem('${item.id}')" title="Remove item">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                       <i class="bi bi-x-lg"></i>
                     </button>
                 </div>
                 <div class="flex items-center justify-between flex-wrap gap-3 mt-4">
@@ -377,12 +377,12 @@ function buildItemCard(item) {
                 </div>
                 <div class="mt-3 flex items-center gap-4">
                     <button class="save-btn" onclick="saveForLater('${item.id}')">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        <i class="bi bi-bookmark"></i>
                         Save for Later
                     </button>
                     <span class="text-gray-200">|</span>
                     <span class="text-xs text-green-600 font-semibold flex items-center gap-1">
-                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                       <i class="bi bi-check-circle-fill"></i>
                         In Stock${item.stock ? ` (${item.stock} left)` : ''}
                     </span>
                 </div>

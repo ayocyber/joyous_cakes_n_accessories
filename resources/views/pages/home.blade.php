@@ -65,7 +65,7 @@
                     <span class="hero-pill">2–5 day delivery</span>
                 </div>
                 <div class="hero-btns">
-                    <a href="/shop" class="hero-btn-main">Shop Decorating <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <a href="/shop" class="hero-btn-main">Shop Decorating <i class="bi bi-arrow-right"></i></a>
                     <a href="#testimonials" class="hero-btn-ghost">See Reviews</a>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                     <span class="hero-pill">Card & bank pay</span>
                 </div>
                 <div class="hero-btns">
-                    <a href="/shop" class="hero-btn-main">View Gift Sets <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <a href="/shop" class="hero-btn-main">View Gift Sets<i class="bi bi-arrow-right"></i> </a>
                     <a href="#products" class="hero-btn-ghost">Learn More</a>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                     <span class="hero-pill">Award winning</span>
                 </div>
                 <div class="hero-btns">
-                    <a href="/shop" class="hero-btn-main">Start Shopping <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <a href="/shop" class="hero-btn-main">Start Shopping <i class="bi bi-arrow-right"></i> </a>
                     <a href="/about" class="hero-btn-ghost">Our Story</a>
                 </div>
             </div>
@@ -157,7 +157,7 @@
             </div>
             <a href="/shop" class="flex items-center gap-2 text-sm font-semibold text-plum hover:text-blush transition-colors group">
                 View All Products
-                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                <i class="bi bi-arrow-right"></i>
             </a>
         </div>
 
@@ -191,7 +191,7 @@
             @endif
 
             <button class="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center shadow hover:bg-white transition-all text-gray-400 hover:text-rose-500">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                <i class="bi bi-heart"></i>
             </button>
         </div>
 
@@ -243,7 +243,7 @@
                     🛒 {{ $p->stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
                 </span>
                 <span class="btn-label-added">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    <i class="bi bi-check-lg"></i>
                     Added!
                 </span>
             </button>
@@ -321,7 +321,7 @@
                         <p class="font-semibold text-gray-900 text-sm">{{ $t['name'] }}</p>
                         <p class="text-xs text-gray-400">{{ $t['loc'] }}, Nigeria</p>
                     </div>
-                    <svg class="w-7 h-7 text-purple-100 ml-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                   <i class="bi bi-quote"></i>
                 </div>
             </div>
             @endforeach
