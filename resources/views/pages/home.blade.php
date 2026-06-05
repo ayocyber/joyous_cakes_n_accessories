@@ -41,7 +41,6 @@
                 </div>
             </div>
             <div class="hero-badge hero-badge-1"><div class="hero-badge-icon">🛒</div><div><span class="hero-badge-title">Open 24/7</span><span class="hero-badge-sub">Never miss a sale</span></div></div>
-            <div class="hero-badge hero-badge-2"><div class="hero-badge-icon">⭐</div><div><span class="hero-badge-title">12,000+ Bakers</span><span class="hero-badge-sub">★★★★★ Rated</span></div></div>
             <div class="hero-sidedots" id="heroSideDots">
                 <button class="hero-sddot on" data-i="0"></button>
                 <button class="hero-sddot" data-i="1"></button>
@@ -74,39 +73,15 @@
         </div>
 
         <!-- Slide 3 -->
-        <div class="hero-slide" id="hsl2">
-            <img class="hero-slide-img" src="https://images.unsplash.com/photo-1607478900766-efe13248b125?w=1400&q=90" alt="Baker at work" />
-            <div class="hero-scrim"></div>
-            <div class="hero-bignum">03</div>
-            <div class="hero-body">
-                <div class="hero-tag"><span class="hero-tag-dot"></span>This month's deal</div>
-                <h1 class="hero-title">The Perfect Gift<br>for <i>Every Baker</i></h1>
-                <p class="hero-desc">Beautifully packaged gift sets for birthdays and celebrations. Order online anytime — we deliver the joy to their door.</p>
-                <div class="hero-pills">
-                    <span class="hero-pill">Free packaging</span>
-                    <span class="hero-pill">Secure checkout</span>
-                    <span class="hero-pill">Card & bank pay</span>
-                </div>
-                <div class="hero-btns">
-                    <a href="/shop" class="hero-btn-main">View Gift Sets<i class="bi bi-arrow-right"></i> </a>
-                    <a href="#products" class="hero-btn-ghost">Learn More</a>
-                </div>
-            </div>
-            <div class="hero-badge hero-badge-1"><div class="hero-badge-icon">🎁</div><div><span class="hero-badge-title">Gift ready</span><span class="hero-badge-sub">Free packaging</span></div></div>
-            <div class="hero-badge hero-badge-2"><div class="hero-badge-icon">🔒</div><div><span class="hero-badge-title">100% secure</span><span class="hero-badge-sub">Safe checkout</span></div></div>
-        </div>
-
-        <!-- Slide 4 -->
         <div class="hero-slide" id="hsl3">
             <img class="hero-slide-img" src="https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?w=1400&q=90" alt="Celebration cake" />
             <div class="hero-scrim"></div>
-            <div class="hero-bignum">04</div>
+            <div class="hero-bignum">03</div>
             <div class="hero-body">
                 <div class="hero-tag"><span class="hero-tag-dot"></span>Bestseller alert</div>
                 <h1 class="hero-title">From Home Baker<br>to <i>Pastry Legend</i></h1>
-                <p class="hero-desc">12,000+ Nigerian bakers trust our tools. Affordable, reliable and beautiful — your shop never sleeps.</p>
+                <p class="hero-desc">Affordable, reliable and beautiful — your shop never sleeps.</p>
                 <div class="hero-pills">
-                    <span class="hero-pill">All 36 states</span>
                     <span class="hero-pill">Since 2018</span>
                     <span class="hero-pill">Award winning</span>
                 </div>
@@ -115,7 +90,6 @@
                     <a href="/about" class="hero-btn-ghost">Our Story</a>
                 </div>
             </div>
-            <div class="hero-badge hero-badge-1"><div class="hero-badge-icon">🇳🇬</div><div><span class="hero-badge-title">Made for Nigeria</span><span class="hero-badge-sub">All 36 states</span></div></div>
             <div class="hero-badge hero-badge-2"><div class="hero-badge-icon">🏆</div><div><span class="hero-badge-title">6 years trusted</span><span class="hero-badge-sub">Since 2018</span></div></div>
         </div>
 
@@ -124,8 +98,6 @@
     <!-- Stats belt -->
     {{-- <div class="hero-stats">
         <div class="hero-stat"><span class="hero-stat-n">350+</span><span class="hero-stat-l">Products</span></div>
-        <div class="hero-stat"><span class="hero-stat-n">12K+</span><span class="hero-stat-l">Bakers</span></div>
-        <div class="hero-stat"><span class="hero-stat-n">36</span><span class="hero-stat-l">States</span></div>
         <div class="hero-stat"><span class="hero-stat-n">24/7</span><span class="hero-stat-l">Orders Open</span></div>
     </div> --}}
 
@@ -150,16 +122,65 @@
 <section id="products" class="py-20" style="background:#faf8ff;">
     <div class="max-w-7xl mx-auto px-5 lg:px-8">
 
-        <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-12 reveal">
-            <div>
-                <span class="text-xs font-semibold text-plum uppercase tracking-widest">Top Picks</span>
-                <h2 class="font-serif text-4xl lg:text-5xl font-bold text-gray-900 mt-2">Our <em class="grad-text not-italic">Bestsellers</em></h2>
-            </div>
-            <a href="/shop" class="flex items-center gap-2 text-sm font-semibold text-plum hover:text-blush transition-colors group">
-                View All Products
-                <i class="bi bi-arrow-right"></i>
-            </a>
-        </div>
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 reveal">
+
+{{-- Left --}}
+<div>
+    <span class="text-xs font-semibold text-plum uppercase tracking-widest">
+        Top Picks
+    </span>
+
+    <h2 class="font-serif text-4xl lg:text-5xl font-bold text-gray-900 mt-2">
+        Our <em class="grad-text not-italic">Bestsellers</em>
+    </h2>
+</div>
+
+{{-- Right --}}
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+
+    {{-- Currency Switcher --}}
+    <div class="bg-white border border-purple-100 rounded-2xl p-1 shadow-sm flex items-center">
+
+        <span class="px-3 text-xs font-semibold text-gray-400 uppercase">
+            Currency
+        </span>
+
+        <a href="?currency=LRD"
+           class="px-3 py-2 rounded-xl text-xs font-semibold transition-all
+           {{ request('currency', 'LRD') == 'LRD'
+                ? 'bg-[#5B2D90] text-white shadow-sm'
+                : 'text-gray-600 hover:bg-purple-50' }}">
+            LRD
+        </a>
+
+        <a href="?currency=USD"
+           class="px-3 py-2 rounded-xl text-xs font-semibold transition-all
+           {{ request('currency') == 'USD'
+                ? 'bg-[#5B2D90] text-white shadow-sm'
+                : 'text-gray-600 hover:bg-purple-50' }}">
+            USD
+        </a>
+
+        <a href="?currency=NGN"
+           class="px-3 py-2 rounded-xl text-xs font-semibold transition-all
+           {{ request('currency') == 'NGN'
+                ? 'bg-[#5B2D90] text-white shadow-sm'
+                : 'text-gray-600 hover:bg-purple-50' }}">
+            NGN
+        </a>
+
+    </div>
+
+    {{-- View all --}}
+    <a href="/shop"
+       class="flex items-center gap-2 text-sm font-semibold text-plum hover:text-blush transition-colors">
+        View All Products
+        <i class="bi bi-arrow-right"></i>
+    </a>
+
+</div>
+
+</div>
 
 @php
     $bgColors = ['from-purple-50 to-purple-100','from-pink-50 to-rose-100','from-fuchsia-50 to-pink-100','from-indigo-50 to-purple-100'];
@@ -176,8 +197,8 @@
 
         {{-- Image --}}
         <div class="product-img-wrap bg-gradient-to-br {{ $bg }} relative overflow-hidden rounded-t-2xl">
-            @if($p->image)
-                <img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->name }}"
+            @if($p->image_path)
+                <img src="{{ asset('storage/' . $p->image_path) }}" alt="{{ $p->name }}"
                      class="w-full h-48 object-cover" onerror="this.style.display='none'">
             @else
                 <div class="w-full h-48 flex items-center justify-center text-4xl text-gray-300">🍞</div>
@@ -273,17 +294,39 @@
             <h2 class="font-serif text-4xl lg:text-5xl font-bold text-gray-900 mt-2">How It <em class="grad-text not-italic">Works</em></h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-            @php
-                $steps = [
-                    ['num'=>'01','icon'=>'🔍','title'=>'Browse Our Range','desc'=>'Explore 350+ professional baking tools and accessories in our curated shop.'],
-                    ['num'=>'02','icon'=>'🛒','title'=>'Add to Cart','desc'=>'Select your items, choose quantities and any variants that suit your needs.'],
-                    ['num'=>'03','icon'=>'💳','title'=>'Secure Checkout','desc'=>'Pay safely via bank transfer, card or mobile payment — fully encrypted.'],
-                    ['num'=>'04','icon'=>'📦','title'=>'Swift Delivery','desc'=>'Your order is carefully packed and delivered to your door within 2–5 days.'],
-                ];
-            @endphp
+        @php
+            $steps = [
+                [
+                    'num' => '01',
+                    'icon' => 'bi-search',
+                    'title' => 'Browse Our Range',
+                    'desc' => 'Explore 350+ professional baking tools and accessories in our curated shop.',
+                ],
+                [
+                    'num' => '02',
+                    'icon' => 'bi-cart3',
+                    'title' => 'Add to Cart',
+                    'desc' => 'Select your items, choose quantities and any variants that suit your needs.',
+                ],
+                [
+                    'num' => '03',
+                    'icon' => 'bi-credit-card',
+                    'title' => 'Secure Checkout',
+                    'desc' => 'Pay safely via bank transfer, card or mobile payment — fully encrypted.',
+                ],
+                [
+                    'num' => '04',
+                    'icon' => 'bi-box-seam',
+                    'title' => 'Swift Delivery',
+                    'desc' => 'Your order is carefully packed and delivered to your door within 2–5 days.',
+                ],
+            ];
+        @endphp
             @foreach($steps as $i => $s)
             <div class="step-card p-7 text-center reveal d{{ $i+1 }}">
-                <div class="text-4xl mb-4">{{ $s['icon'] }}</div>
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center">
+                <i class="{{ $s['icon'] }} text-2xl text-plum"></i>
+            </div>
                 <div class="w-9 h-9 rounded-full btn-primary text-white text-xs font-bold flex items-center justify-center mx-auto mb-4 shadow-md">{{ $s['num'] }}</div>
                 <h3 class="font-serif font-bold text-gray-900 text-lg mb-2">{{ $s['title'] }}</h3>
                 <p class="text-sm text-gray-500 leading-relaxed">{{ $s['desc'] }}</p>
@@ -303,27 +346,37 @@
             <span class="text-xs font-semibold text-plum uppercase tracking-widest">Baker Reviews</span>
             <h2 class="font-serif text-4xl lg:text-5xl font-bold text-gray-900 mt-2">What <em class="grad-text not-italic">Bakers Say</em></h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            @php
-                $testis = [
-                    ['name'=>'Amara O.','loc'=>'Lagos','text'=>"The piping tips set completely transformed my cake decorating. Professional quality at such a fair price. My clients can't believe I'm working from home!",'stars'=>5,'av'=>'A','bg'=>'bg-plum'],
-                    ['name'=>'Kemi A.','loc'=>'Abuja','text'=>"I've been baking for 8 years and these are the best cake tins I've ever used. Even heat distribution, easy release — absolutely brilliant quality.",'stars'=>5,'av'=>'K','bg'=>'bg-blush'],
-                    ['name'=>'Tolu B.','loc'=>'Ibadan','text'=>"Ordered the starter kit as a gift for my daughter and she was so excited. Everything was beautifully packaged. Delivery was fast too. Will order again!",'stars'=>5,'av'=>'T','bg'=>'bg-purple-500'],
-                ];
-            @endphp
-            @foreach($testis as $i => $t)
-            <div class="testi-card p-7 reveal d{{ $i+1 }}">
-                <div class="flex text-yellow-400 text-sm mb-4">@for($s=0;$s<$t['stars'];$s++)★@endfor</div>
-                <p class="text-gray-600 text-sm leading-relaxed mb-6">"{{ $t['text'] }}"</p>
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full {{ $t['bg'] }} flex items-center justify-center text-white font-bold text-sm">{{ $t['av'] }}</div>
-                    <div>
-                        <p class="font-semibold text-gray-900 text-sm">{{ $t['name'] }}</p>
-                        <p class="text-xs text-gray-400">{{ $t['loc'] }}, Nigeria</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach($testimonials as $i => $t)
+                <div class="testi-card p-7 reveal d{{ ($i % 3) + 1 }}">
+                    <div class="flex text-yellow-400 text-sm mb-4">
+                        @for($s = 0; $s < $t->rating; $s++)
+                            ★
+                        @endfor
                     </div>
-                   <i class="bi bi-quote"></i>
+
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        "{{ $t->testimonial }}"
+                    </p>
+
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-plum flex items-center justify-center text-white font-bold text-sm">
+                            {{ $t->avatar_letter ?? strtoupper(substr($t->name, 0, 1)) }}
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-gray-900 text-sm">
+                                {{ $t->name }}
+                            </p>
+
+                            <p class="text-xs text-gray-400">
+                                {{ $t->location }}
+                            </p>
+                        </div>
+
+                        <i class="bi bi-quote ml-auto"></i>
+                    </div>
                 </div>
-            </div>
             @endforeach
         </div>
     </div>
@@ -333,7 +386,7 @@
 <!-- ══════════════════════════════════
      NEWSLETTER CTA
 ══════════════════════════════════ -->
-<section class="py-20 bg-white">
+<!-- <section class="py-20 bg-white">
     <div class="max-w-xl mx-auto px-5 text-center reveal">
         <div class="w-16 h-16 rounded-2xl btn-primary flex items-center justify-center mx-auto mb-6 shadow-xl text-2xl">
             <span class="relative z-10">✉️</span>
@@ -349,7 +402,7 @@
         </div>
         <p class="text-xs text-gray-400 mt-4">No spam. Unsubscribe anytime.</p>
     </div>
-</section>
+</section> -->
 
 
 {{-- Modal lives INSIDE @section, BEFORE @endsection --}}

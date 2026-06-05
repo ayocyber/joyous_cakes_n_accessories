@@ -9,6 +9,8 @@ use App\Models\Payment;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewOrderNotificationMail;
 
 class CheckoutController extends Controller
 {
@@ -39,9 +41,34 @@ class CheckoutController extends Controller
     //     ));
     // }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages.checkout.index');
+        // $cart = session()->get('cart', []);
+
+        //     if (empty($cart)) {
+        //         return redirect()->route('cart')
+        //             ->with('error', 'Your cart is empty.');
+        //     }
+    
+        //     $subtotal = 0;
+    
+        //     foreach ($cart as $item) {
+        //         $subtotal += $item['price'] * $item['quantity'];
+        //     }
+    
+        //     $shippingFee = 0;
+        //     $total = $subtotal + $shippingFee;
+
+        $currency = $request->get('currency', 'LRD');
+
+        $rates = [
+            'LRD' => 1,
+            'USD' => 0.0055,
+            'NGN' => 7.46,
+        ];
+
+        
+        return view('pages.checkout.index', compact('currency', 'rates'));
     }
 
     public function manualCheckout(Request $request)
@@ -124,8 +151,8 @@ class CheckoutController extends Controller
         'vat'            => $vat,
         'total_price'    => $total,
         'currency'       => 'LRD',
-        'status'         => 'pending',
-        'payment_status' => 'unpaid',
+        'status' => 'pending_payment_confirmation',
+        'payment_status' => 'awaiting_verification',
         'payment_method' => 'bank_transfer',
     ]);
 
@@ -155,8 +182,24 @@ class CheckoutController extends Controller
         'status'                => 'pending',
     ]);
 
-    return response()->json(['success' => true, 'order_id' => $order->id]);
+    Mail::to('joyouscakesnaccessories@gmail.com')
+    ->send(
+        new NewOrderNotificationMail(
+            $order,
+            $customer
+        )
+    );
+
+    return response()->json([
+        'success' => true,
+        'order_id' => $order->id,
+        'order_number' => $order->order_number,
+        'customer_name' => $customer->name,
+        'phone' => $customer->phone,
+        'amount' => $order->total_price,
+    ]);
     }
+
     public function paystackCheckout(Request $request)
     {
         return back()->with('info', 'Online payment will be available soon.');

@@ -1,5 +1,9 @@
 @extends('layout.app')
-@section('title', 'Shop')
+
+@section('meta_title', 'Shop Baking Tools')
+@section('meta_description', 'Browse 350+ professional baking accessories...')
+@section('og_image', asset('images/joyous_logo_2.png'))
+@section('meta_robots', 'noindex, nofollow') {{-- e.g. on /cart --}}
 
 @push('styles')
 <style>
@@ -183,6 +187,17 @@
                             </button>
                         </div>
                     </div>
+                    <div class="flex items-center gap-2 bg-white border border-purple-100 rounded-xl p-1">
+                        <a href="?currency=LRD" class="px-3 py-1 text-xs {{ request('currency','LRD')=='LRD' ? 'bg-[#5B2D90] text-white shadow-sm' : 'text-gray-600' }}">
+                            LRD
+                        </a>
+                        <a href="?currency=USD" class="px-3 py-1 text-xs {{ request('currency')=='USD' ? 'bg-[#5B2D90] text-white shadow-sm' : 'text-gray-600' }}">
+                            USD
+                        </a>
+                        <a href="?currency=NGN" class="px-3 py-1 text-xs {{ request('currency')=='NGN' ? 'bg-[#5B2D90] text-white shadow-sm' : 'text-gray-600' }}">
+                            NGN
+                        </a>
+                    </div>
                 </div>
 
 @php
@@ -190,12 +205,17 @@
         return [
             'id'    => $p->id,
             'name'  => $p->name,
-            'price' => $p->price,
             'stock' => $p->stock,
             'badge' => $p->featured ? 'Featured' : ($p->stock < 5 ? 'Low Stock' : null),
             'image' => $p->image_path ?? '',
         ];
     });
+
+    $symbols = [
+    'LRD' => 'L$',
+    'USD' => '$',
+    'NGN' => '₦',
+];
 @endphp
 
 <script>
@@ -219,10 +239,10 @@
 
     {{-- Image --}}
     <div class="product-img-wrap bg-gradient-to-br {{ $bg }} relative overflow-hidden rounded-t-2xl">
-        @if($p->image)
-            <img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->name }}"
-                 class="w-full h-48 object-cover"
-                 onerror="this.style.display='none'">
+        @if($p->image_path)
+        <img src="{{ asset('storage/' . $p->image_path) }}" alt="{{ $p->name }}"
+            class="w-full h-48 object-cover"
+            onerror="this.style.display='none'">
         @else
             <div class="w-full h-48 flex items-center justify-center text-4xl text-gray-300">🍞</div>
         @endif
@@ -257,7 +277,8 @@
 
         {{-- Price + Size --}}
         <div class="flex items-center gap-2 flex-wrap mt-1">
-            <span class="text-base font-bold text-green-700">L${{ number_format($p->price, 2) }}</span>
+            <span class="text-base font-bold text-green-700">{{ $symbols[$currency] ?? '' }}{{ number_format($p->display_price, 2) }}
+        </span>
             @if($p->size_value)
             <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">{{ $p->size_value }} {{ $p->size_unit }}</span>
             @endif
@@ -285,7 +306,7 @@
             data-name="{{ $p->name }}"
             data-price="{{ number_format($p->price, 2) }}"
             data-stock="{{ $p->stock }}"
-            data-image="{{ $p->image ? asset('storage/' . $p->image) : '' }}"
+            data-image="{{ $p->image_path ? asset('storage/' . $p->image_path) : '' }}"
             data-badge="{{ $badge ?? '' }}"
             {{ $p->stock === 0 ? 'disabled' : '' }}
             onclick="handleAddToCart(this)">

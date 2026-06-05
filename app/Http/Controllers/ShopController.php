@@ -10,27 +10,32 @@ class ShopController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::with('category');
+        $currency = $request->get('currency', 'LRD');
 
-        // Search
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
-            });
-        }
+        $query = Product::with('categories');
 
-        // Category filter
-        if ($request->filled('category')) {
-            $query->where('category_id', $request->category);
-        }
+    // Search
+    if ($request->filled('search')) {
+        $search = $request->search;
 
-        // Price filter
-        if ($request->filled('max_price')) {
-            $query->where('price', '<=', $request->max_price);
-        }
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+            ->orWhere('description', 'like', "%{$search}%");
+        });
+    }
 
+    // Category filter (ONLY if selected)
+    if ($request->filled('category')) {
+
+        $query->whereHas('categories', function ($q) use ($request) {
+            $q->where('categories.id', $request->category);
+        });
+    }
+
+    // Price filter
+    if ($request->filled('max_price')) {
+        $query->where('price', '<=', $request->max_price);
+    }
         // Sort — use if/else, NOT match (match returns a value, doesn't chain)
         switch ($request->sort) {
             case 'price_asc':
@@ -48,8 +53,45 @@ class ShopController extends Controller
         }
 
         $products   = $query->paginate(12)->withQueryString();
+
+        $products->getCollection()->transform(function ($product) use ($currency) {
+
+            $product->display_price = $this->convertCurrency(
+                $product->price,
+                $product->currency,
+                $currency
+            );
+        
+            return $product;
+        });
+
+        
         $categories = Category::withCount('products')->get();
 
-        return view('pages.shop', compact('products', 'categories'));
+        return view('pages.shop', compact('products', 'categories', 'currency'));
     }
+
+    private function convertCurrency(float $amount, string $from, string $to): float
+{
+    if ($from === $to) {
+        return $amount;
+    }
+
+    $rates = [
+        'USD' => [
+            'NGN' => 1361,
+            'LRD' => 182.47,
+        ],
+        'NGN' => [
+            'USD' => 0.00073,
+            'LRD' => 0.13,
+        ],
+        'LRD' => [
+            'USD' => 0.0055,
+            'NGN' => 7.46,
+        ],
+    ];
+
+    return $amount * ($rates[$from][$to] ?? 1);
+}
 }

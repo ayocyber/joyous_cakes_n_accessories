@@ -171,13 +171,8 @@
                             <label for="country" class="field-label">Country <span class="text-red-500">*</span></label>
                             <select id="country" class="field-input">
                                 <option value="" disabled selected>Select country…</option>
+                                <option value="Liberia">Liberia</option>
                                 <option value="Nigeria">Nigeria</option>
-                                <option value="Ghana">Ghana</option>
-                                <option value="Kenya">Kenya</option>
-                                <option value="South Africa">South Africa</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="United States">United States</option>
-                                <option value="Other">Other</option>
                             </select>
                         </div>
  
@@ -226,48 +221,94 @@
  
                     {{-- Manual panel --}}
                     <div id="panel-manual">
-                        <p class="text-sm text-gray-500 mb-4 leading-relaxed">
-                            Transfer the exact order total to the account below, then click
-                            <strong class="text-gray-800">"I have made the transfer"</strong>.
-                            We'll confirm your payment and reach out on WhatsApp to arrange delivery.
+                        <p class="text-sm text-gray-500 mb-5 leading-relaxed">
+                            Transfer the exact order total to any of the accounts below, then click
+                            <strong class="text-gray-800">"I Have Made the Transfer"</strong>
+                            to send your payment receipt via WhatsApp for confirmation.
                         </p>
- 
-                        <div class="bank-card mb-5">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Bank Account Details</p>
+
+                        {{-- MTN Mobile Money --}}
+                        <div class="bank-card mb-4">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">
+                                MTN Mobile Money (LRD & USD)
+                            </p>
+
                             <div class="space-y-3">
+                            <div class="flex items-center justify-between">
                                 <div>
-                                    <p class="text-xs text-gray-400">Bank</p>
-                                    <p class="text-sm font-bold text-gray-900">First Bank of Nigeria</p>
+                                    <p class="text-xs text-gray-400">Account Number</p>
+                                    <p class="text-lg font-bold text-gray-900">
+                                        0886188822
+                                    </p>
                                 </div>
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <p class="text-xs text-gray-400">Account Number</p>
-                                        <p class="text-lg font-bold text-gray-900 tracking-widest" id="acctNum">3012345678</p>
-                                    </div>
-                                    <button type="button" class="copy-btn" onclick="copyAcct()">
-                                        <i class="bi bi-files"></i>
-                                        Copy
-                                    </button>
-                                </div>
+
+                                <button
+                                    type="button"
+                                    class="copy-btn"
+                                    onclick="copyText('0886188822')">
+                                    <i class="bi bi-files"></i>
+                                    Copy
+                                </button>
+                            </div>
+
                                 <div>
                                     <p class="text-xs text-gray-400">Account Name</p>
-                                    <p class="text-sm font-bold text-gray-900">Your Business Name Ltd</p>
-                                </div>
-                                {{-- Amount pulled from localStorage by JS --}}
-                                <div class="mt-3 pt-3 border-t border-purple-100 flex items-center justify-between">
-                                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Amount to Transfer</p>
-                                    <p class="text-xl font-bold text-plum" id="amountDue">—</p>
+                                    <p class="text-sm font-bold text-gray-900">Joy Okpara</p>
                                 </div>
                             </div>
                         </div>
- 
-                        <button type="button" id="transferBtn" class="transfer-btn" onclick="placeOrder(this, event)">
-                            <i class="bi bi-check-circle"></i>
-                            I have made the transfer
+
+                        {{-- GTB USD --}}
+                        <div class="bank-card mb-5">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">
+                                GTBank USD Account
+                            </p>
+
+                            <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs text-gray-400">Account Number</p>
+                                    <p class="text-lg font-bold text-gray-900">
+                                        203-329010-2590
+                                    </p>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="copy-btn"
+                                    onclick="copyText('2033290102590')">
+                                    <i class="bi bi-files"></i>
+                                    Copy
+                                </button>
+                            </div>
+
+                                <div>
+                                    <p class="text-xs text-gray-400">Account Name</p>
+                                    <p class="text-sm font-bold text-gray-900">Joy Faustina Okpara</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Amount --}}
+                        <div class="mb-6 p-4 bg-purple-50 rounded-2xl border border-purple-100 flex items-center justify-between">
+                            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                                Amount to Transfer
+                            </p>
+
+                            <p class="text-xl font-bold text-plum" id="amountDue">—</p>
+                        </div>
+
+                        <button
+                            type="button"
+                            id="transferBtn"
+                            class="transfer-btn bg-green-600 hover:bg-green-700"
+                            onclick="sendReceiptToWhatsApp()">
+                            <i class="bi bi-whatsapp"></i>
+                            I Have Made the Transfer
                         </button>
- 
+
                         <p class="text-center text-xs text-gray-400 mt-3">
-                            After clicking, your order will be recorded and we'll contact you on WhatsApp to confirm.
+                            You'll be redirected to WhatsApp to send your payment receipt and complete order confirmation.
                         </p>
                     </div>
  
@@ -276,7 +317,7 @@
                         <div class="rounded-2xl bg-amber-50 border border-amber-200 p-6 text-center">
                             <div class="text-4xl mb-3">🚧</div>
                             <p class="font-bold text-gray-800 mb-1">Online payment coming soon</p>
-                            <p class="text-sm text-gray-500 max-w-xs mx-auto">We're integrating Paystack for card and mobile payments. For now, please use bank transfer.</p>
+                            <p class="text-sm text-gray-500 max-w-xs mx-auto">We're integrating card and mobile payments soon. For now, please use bank transfer.</p>
                             <button type="button" onclick="selectMethod('manual')"
                                 class="mt-5 text-sm font-bold text-plum border border-purple-200 px-5 py-2.5 rounded-full hover:bg-plum hover:text-white hover:border-plum transition-all">
                                 ← Use Bank Transfer Instead
@@ -285,11 +326,27 @@
                     </div>
                 </div>
  
-            </div>{{-- end left --}}
+            </div>
+            {{-- end left --}}
  
  
             {{-- ══════════════ RIGHT COLUMN: summary (JS-rendered) ══════════════ --}}
             <div class="w-full lg:w-[360px] shrink-0">
+            <div class="flex items-center gap-2 bg-white border border-purple-100 rounded-xl p-1 mb-4">
+                    <a href="?currency=LRD" class="px-3 py-1 text-xs rounded-lg {{ request('currency','LRD') == 'LRD' ? 'bg-plum text-white' : 'text-gray-600' }}">
+                        LRD
+                    </a>
+
+                    <a href="?currency=USD"
+                    class="px-3 py-1 text-xs rounded-lg {{ request('currency') == 'USD' ? 'bg-plum text-white' : 'text-gray-600' }}">
+                        USD
+                    </a>
+
+                    <a href="?currency=NGN"
+                    class="px-3 py-1 text-xs rounded-lg {{ request('currency') == 'NGN' ? 'bg-plum text-white' : 'text-gray-600' }}">
+                        NGN
+                    </a>
+                </div>
                 <div class="summary-card reveal d2">
  
                     {{-- Header --}}
@@ -339,17 +396,17 @@
  
                         <div class="trust-strip">
                             <div class="trust-item">
-                                <div class="text-xl mb-1">🔒</div>
+                                <div class="text-xl mb-1"> <i class="bi bi-shield-lock text-plum"></i></div>
                                 <p class="text-xs font-semibold text-gray-700">Secure</p>
                                 <p class="text-xs text-gray-400">SSL Encrypted</p>
                             </div>
                             <div class="trust-item">
-                                <div class="text-xl mb-1">↩️</div>
+                                <div class="text-xl mb-1"><i class="bi bi-arrow-counterclockwise text-plum"></i></div>
                                 <p class="text-xs font-semibold text-gray-700">Returns</p>
                                 <p class="text-xs text-gray-400">7-day policy</p>
                             </div>
                             <div class="trust-item">
-                                <div class="text-xl mb-1">📦</div>
+                                <div class="text-xl mb-1"><i class="bi bi-box-seam text-plum"></i></div>
                                 <p class="text-xs font-semibold text-gray-700">Delivery</p>
                                 <p class="text-xs text-gray-400">2–5 days</p>
                             </div>
@@ -380,6 +437,19 @@
  
 @push('scripts')
 <script>
+window.CURRENCY = @json($currency);
+
+window.RATES = {
+    LRD: {{ $rates['LRD'] }},
+    USD: {{ $rates['USD'] }},
+    NGN: {{ $rates['NGN'] }}
+};
+
+window.SYMBOLS = {
+    LRD: 'L$',
+    USD: '$',
+    NGN: '₦'
+};
 /* ═══════════════════════════════════════════
    CONSTANTS  (must match CheckoutController)
 ═══════════════════════════════════════════ */
@@ -387,7 +457,22 @@ const SHIPPING_THRESHOLD = 500;
 const SHIPPING_COST      = 15;
 const VAT_RATE           = 0.075;
  
-function fmt(n) { return 'L$' + Math.round(n).toLocaleString(); }
+function convertAmount(amount)
+{
+    return amount * window.RATES[window.CURRENCY];
+}
+
+function fmt(amount)
+{
+    return window.SYMBOLS[window.CURRENCY] +
+        convertAmount(amount).toLocaleString(
+            undefined,
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
+}
  
 /* ═══════════════════════════════════════════
    RENDER ORDER SUMMARY FROM localStorage
@@ -509,6 +594,12 @@ function placeOrder(btn, event) {
         if (data.success) {
             CartUtils.clearCart();                                    // ✅ wipe localStorage
             window.location.href = '/order-success/' + data.order_id;
+
+            localStorage.setItem(
+                'pendingOrder',
+                JSON.stringify(data)
+            );
+        
         } else {
             showToast('❌', 'Error', data.message || 'Checkout failed. Please try again.');
             btn.disabled = false;
@@ -543,18 +634,48 @@ function selectMethod(method) {
 /* ═══════════════════════════════════════════
    COPY ACCOUNT NUMBER
 ═══════════════════════════════════════════ */
-function copyAcct() {
-    const num = document.getElementById('acctNum').textContent.trim();
-    navigator.clipboard.writeText(num)
-        .then(() => showToast('📋', 'Copied!', 'Account number copied to clipboard.'))
-        .catch(() => {
-            const el = document.createElement('textarea');
-            el.value = num; document.body.appendChild(el);
-            el.select(); document.execCommand('copy'); document.body.removeChild(el);
-            showToast('📋', 'Copied!', 'Account number copied to clipboard.');
-        });
+function copyText(text)
+{
+    navigator.clipboard.writeText(text);
+
+    showToast(
+        '✅',
+        'Copied',
+        `${text} copied to clipboard`
+    );
 }
- 
+
+/* ═══════════════════════════════════════════
+   SEND RECEIPT TO WHATSAPP
+═══════════════════════════════════════════ */
+function sendReceiptToWhatsApp()
+{
+    const order = JSON.parse(
+        localStorage.getItem('pendingOrder') || '{}'
+    );
+
+    const phone = "231886188822";
+
+    const message =
+`Hello Joyous Cakes & Accessories,
+
+I have completed payment for my order.
+
+Order Number: ${order.order_number}
+Customer Name: ${order.customer_name}
+Phone: ${order.phone}
+Amount Paid: ${fmt(order.amount)}
+
+I have attached my payment receipt for verification.
+
+Thank you.`;
+
+    window.open(
+        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+        '_blank'
+    );
+}
+
 /* ═══════════════════════════════════════════
    RIPPLE + TOAST
 ═══════════════════════════════════════════ */

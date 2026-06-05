@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'category_id',
         'name',
         'slug',
         'description',
@@ -28,10 +27,10 @@ class Product extends Model
         'featured' => 'boolean',
     ];
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
+    public function categories()
+{
+    return $this->belongsToMany(Category::class);
+}
 
     // public function images()
     // {

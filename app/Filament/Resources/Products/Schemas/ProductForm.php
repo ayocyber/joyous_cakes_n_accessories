@@ -15,10 +15,9 @@ class ProductForm
     {
         return $schema
             ->components([
-                Select::make('category_id')
-                    ->relationship('category', 'name')
-                    ->searchable()
-                    ->preload()
+                Select::make('categories')
+                    ->multiple()
+                    ->relationship('categories', 'name')
                     ->required(),
                 TextInput::make('name')
                     ->required(),

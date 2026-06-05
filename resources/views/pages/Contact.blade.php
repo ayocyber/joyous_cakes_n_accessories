@@ -51,7 +51,7 @@
                 $infos = [
                     ['icon'=>'📞','title'=>'Call Us','lines'=>['+231 886 188 822','+231 886 188 822'],'sub'=>'Mon–Sat, 8am–6pm'],
                     ['icon'=>'✉️','title'=>'Email Us','lines'=>['joyouscakesnaccessories@gmail.com, +231 886 188 822'],'sub'=>'We reply within 2 hours'],
-                    ['icon'=>'📍','title'=>'Visit Us','lines'=>['12 Adewale Close','Ikeja, Lagos State'],'sub'=>'Mon–Sat, 9am–5pm'],
+                    ['icon'=>'📍','title'=>'Visit Us','lines'=>['Liberia'],'sub'=>'Mon–Sat, 9am–5pm'],
                     ['icon'=>'💬','title'=>'WhatsApp','lines'=>['+231 886 188 822'],'sub'=>'Quick replies on WhatsApp'],
                 ];
             @endphp

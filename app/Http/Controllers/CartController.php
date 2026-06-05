@@ -8,14 +8,22 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
     //
-      public function index()
+      public function index(Request $request)
     {
-        $recommendations = Product::with('category')
+        $recommendations = Product::with('categories')
             ->where('is_active', true)
             ->inRandomOrder()
             ->limit(4)
             ->get();
 
-        return view('pages.cart', compact('recommendations'));
+        $currency = $request->get('currency', 'LRD');
+
+        $rates = [
+            'LRD' => 1,
+            'USD' => 0.0055,
+            'NGN' => 7.46,
+        ];
+
+        return view('pages.cart', compact('recommendations', 'rates', 'currency'));
     }
 }

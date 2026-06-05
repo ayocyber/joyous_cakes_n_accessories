@@ -66,11 +66,28 @@
     <div class="max-w-7xl mx-auto px-5 lg:px-8">
         <div class="flex flex-col lg:flex-row gap-8 items-start">
 
+        
             <!-- ══════════════
                  LEFT: ITEMS
                  Rendered entirely by JS from localStorage
             ══════════════ -->
             <div class="flex-1 min-w-0" id="cartItemsList">
+            <div class="flex items-center gap-2 bg-white border border-purple-100 rounded-xl p-1 mb-4">
+                    <a href="?currency=LRD" class="px-3 py-1 text-xs rounded-lg {{ request('currency','LRD') == 'LRD' ? 'bg-plum text-white' : 'text-gray-600' }}">
+                        LRD
+                    </a>
+
+                    <a href="?currency=USD"
+                    class="px-3 py-1 text-xs rounded-lg {{ request('currency') == 'USD' ? 'bg-plum text-white' : 'text-gray-600' }}">
+                        USD
+                    </a>
+
+                    <a href="?currency=NGN"
+                    class="px-3 py-1 text-xs rounded-lg {{ request('currency') == 'NGN' ? 'bg-plum text-white' : 'text-gray-600' }}">
+                        NGN
+                    </a>
+                </div>
+
                 {{-- JS populates this. Skeleton shown while loading. --}}
                 <div id="cartSkeleton" class="space-y-4">
                     @for($s=0;$s<2;$s++)
@@ -110,20 +127,20 @@
                     </div>
                     <div id="savedList" class="space-y-3"></div>
                 </div>
-
             </div>{{-- end items --}}
 
 
+           
             <!-- ══════════════
                  RIGHT: SUMMARY
             ══════════════ -->
             <div class="w-full lg:w-[360px] shrink-0">
-                <div class="summary-card reveal d2">
+                   <div class="summary-card reveal d2">
 
                     <!-- Header -->
                     <div class="summary-header">
                         <p class="text-white/70 text-xs font-semibold uppercase tracking-widest mb-0.5">Order Summary</p>
-                        <p class="text-white font-serif text-2xl font-bold" id="summaryTotal">L$0</p>
+                        <p class="text-white font-serif text-2xl font-bold" id="summaryTotal">0</p>
                         <p class="text-white/60 text-xs mt-1" id="summaryItemCount">0 items in your cart</p>
                     </div>
 
@@ -134,23 +151,23 @@
                         <!-- Line items -->
                         <div class="summary-row">
                             <span>Subtotal</span>
-                            <span class="font-semibold text-gray-800" id="subtotalVal">L$0</span>
+                            <span class="font-semibold text-gray-800" id="subtotalVal">0</span>
                         </div>
                         <div class="summary-row" id="discountRow" style="display:none;">
                             <span class="text-green-600">Discount</span>
-                            <span class="font-semibold text-green-600" id="discountVal">−L$0</span>
+                            <span class="font-semibold text-green-600" id="discountVal">−0</span>
                         </div>
                         <div class="summary-row">
                             <span>Shipping</span>
-                            <span class="font-semibold text-gray-800" id="shippingVal">L$15</span>
+                            <span class="font-semibold text-gray-800" id="shippingVal">15</span>
                         </div>
                         <div class="summary-row">
                             <span>VAT (7.5%)</span>
-                            <span class="font-semibold text-gray-800" id="vatVal">L$0</span>
+                            <span class="font-semibold text-gray-800" id="vatVal">0</span>
                         </div>
                         <div class="summary-row total">
                             <span>Total</span>
-                            <span class="grad-text" id="totalVal">L$0.00</span>
+                            <span class="grad-text" id="totalVal">0.00</span>
                         </div>
 
                         <!-- Checkout CTA -->
@@ -173,25 +190,32 @@
                             @endforeach
                         </div>
 
-                        <!-- Trust strip -->
+                       <!-- Trust strip -->
                         <div class="trust-strip">
                             <div class="trust-item">
-                                <div class="text-xl mb-1">🔒</div>
+                                <div class="text-xl mb-1">
+                                    <i class="bi bi-shield-lock text-plum"></i>
+                                </div>
                                 <p class="text-xs font-semibold text-gray-700">Secure</p>
                                 <p class="text-xs text-gray-400">SSL Encrypted</p>
                             </div>
+
                             <div class="trust-item">
-                                <div class="text-xl mb-1">↩️</div>
+                                <div class="text-xl mb-1">
+                                    <i class="bi bi-arrow-counterclockwise text-plum"></i>
+                                </div>
                                 <p class="text-xs font-semibold text-gray-700">Returns</p>
                                 <p class="text-xs text-gray-400">7-day policy</p>
                             </div>
+
                             <div class="trust-item">
-                                <div class="text-xl mb-1">📦</div>
+                                <div class="text-xl mb-1">
+                                    <i class="bi bi-box-seam text-plum"></i>
+                                </div>
                                 <p class="text-xs font-semibold text-gray-700">Delivery</p>
                                 <p class="text-xs text-gray-400">2–5 days</p>
                             </div>
                         </div>
-
                         <!-- Need help? -->
                         <p class="text-center text-xs text-gray-400 mt-2">
                             Questions?
@@ -225,8 +249,8 @@
     @php $bg = ['from-purple-100 to-pink-50','from-fuchsia-50 to-pink-100','from-pink-50 to-purple-50','from-purple-50 to-indigo-100'][($loop->index) % 4]; @endphp
     <div class="reco-card">
         <div class="reco-img bg-gradient-to-br {{ $bg }} relative">
-            @if($r->image)
-                <img src="{{ asset('storage/' . $r->image) }}" alt="{{ $r->name }}"
+            @if($r->image_path)
+                <img src="{{ asset('storage/' . $r->image_path) }}" alt="{{ $r->name }}"
                      class="w-full h-full object-cover" onerror="this.style.display='none'">
             @else
                 <span class="text-3xl">🍞</span>
@@ -241,7 +265,7 @@
             @endif
             <p class="font-medium text-gray-900 text-sm mb-1 truncate mt-0.5">{{ $r->name }}</p>
             <div class="flex items-center gap-2 mb-3">
-                <span class="font-bold text-green-700 text-sm">L${{ number_format($r->price, 2) }}</span>
+                <span class="font-bold text-green-700 text-sm">{{ number_format($r->price, 2) }}</span>
             </div>
             <button
                 class="reco-add-btn w-full btn-primary text-xs font-semibold py-2.5 rounded-full hover:scale-[1.02] transition-transform shadow"
@@ -249,7 +273,7 @@
                 data-name="{{ $r->name }}"
                 data-price="{{ $r->price }}"
                 data-stock="{{ $r->stock }}"
-                data-image="{{ $r->image ? asset('storage/' . $r->image) : '' }}"
+                data-image="{{ $r->image_path ? asset('storage/' . $r->image_path) : '' }}"
                 data-emoji="🍞"
                 onclick="handleRecoAdd(this)">
                 🛒 Add to Cart
@@ -281,6 +305,44 @@
 <script src="/js/product-card.js"></script>   -->
 
 <script>
+
+/* ═══════════════════════════════════
+   CURRENCY AND RATES
+═══════════════════════════════════ */
+
+window.CART_CURRENCY = @json($currency);
+
+window.CART_RATES = @json($rates);
+
+window.CURRENCY_SYMBOLS = {
+    LRD: 'L$',
+    USD: '$',
+    NGN: '₦'
+};
+
+function convertPrice(amountInLRD) {
+
+const currency = window.CART_CURRENCY;
+
+const rate = window.CART_RATES[currency] || 1;
+
+return amountInLRD * rate;
+}
+
+function formatPrice(amountInLRD) {
+
+const currency = window.CART_CURRENCY;
+
+const symbol = window.CURRENCY_SYMBOLS[currency];
+
+const converted = convertPrice(amountInLRD);
+
+return symbol + converted.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+});
+}
+
 /* ═══════════════════════════════════
    CART PAGE — CONSTANTS & STATE
 ═══════════════════════════════════ */
@@ -292,7 +354,16 @@ let savedItems = {};
 let discount   = 0;
 
 /* ── Number formatter ── */
-function fmt(n) { return 'L$' + Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+function fmt(n) {
+    return Number(n)
+        .toFixed(2)
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function money(amount) {
+    return `${window.CURRENCY_SYMBOLS[window.CART_CURRENCY]}${fmt(amount)}`;
+}
+
 /* ════════════════════════════════════
    RENDER CART FROM localStorage
 ════════════════════════════════════ */
@@ -349,6 +420,14 @@ function buildItemCard(item) {
         ? `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover rounded-2xl" onerror="this.outerHTML='<span class=\\'text-3xl\\'>${item.emoji || '📦'}</span>'">`
         : `<span class="text-3xl">${item.emoji || '📦'}</span>`;
 
+        const convertedPrice = convertPrice(
+            item.price,
+            item.currency || 'LRD',
+            window.CART_CURRENCY
+        );
+
+        const lineTotal = convertedPrice * item.qty;
+
     div.innerHTML = `
         <div class="flex items-start gap-4">
             <div class="item-thumb bg-gradient-to-br from-purple-50 to-purple-100 overflow-hidden">
@@ -371,8 +450,16 @@ function buildItemCard(item) {
                         <button class="qty-btn qty-plus" onclick="changeQty('${item.id}', 1)" ${item.qty >= (item.stock||99) ? 'disabled' : ''}>+</button>
                     </div>
                     <div class="text-right">
-                        <p class="text-xs text-gray-400">Unit price: <span class="font-medium text-gray-600">${fmt(item.price)}</span></p>
-                        <p class="font-serif font-bold text-plum text-lg" id="line-${item.id}">${fmt(item.price * item.qty)}</p>
+                        <p class="text-xs text-gray-400">
+                            Unit price:
+                            <span class="font-medium text-gray-600">
+                                ${money(convertedPrice)}
+                            </span>
+                        </p>
+
+                        <p class="font-serif font-bold text-plum text-lg" id="line-${item.id}">
+                            ${money(lineTotal)}
+                        </p>
                     </div>
                 </div>
                 <div class="mt-3 flex items-center gap-4">
@@ -396,19 +483,51 @@ function buildItemCard(item) {
 ════════════════════════════════════ */
 function updateSummary() {
     const cart    = CartUtils.getCart();
-    const sub     = Object.values(cart).reduce((s, i) => s + i.price * i.qty, 0);
+    const sub = Object.values(cart)
+    .reduce((sum, item) => {
+
+        const convertedPrice = convertPrice(
+            item.price,
+            item.currency || 'LRD',
+            window.CART_CURRENCY
+        );
+
+        return sum + (convertedPrice * item.qty);
+
+    }, 0);
     const disc    = sub * discount;
     const after   = sub - disc;
-    const ship    = after >= FREE_SHIPPING_THRESHOLD ? 0 : (after > 0 ? SHIPPING_COST : 0);
+    const freeShippingThreshold = convertPrice(
+    FREE_SHIPPING_THRESHOLD,
+    'LRD',
+    window.CART_CURRENCY
+    );
+
+    const shippingCost = convertPrice(
+        SHIPPING_COST,
+        'LRD',
+        window.CART_CURRENCY
+    );
+
+    const ship = after >= freeShippingThreshold
+        ? 0
+        : (after > 0 ? shippingCost : 0);
     const vat     = after * VAT_RATE;
     const total   = after + ship + vat;
     const count   = Object.values(cart).reduce((s, i) => s + i.qty, 0);
 
-    document.getElementById('subtotalVal').textContent  = fmt(sub);
-    document.getElementById('vatVal').textContent       = fmt(vat);
-    document.getElementById('shippingVal').textContent  = ship === 0 && after > 0 ? 'FREE 🎉' : fmt(ship);
-    document.getElementById('totalVal').textContent     = fmt(total);
-    document.getElementById('summaryTotal').textContent = fmt(total);
+    document.getElementById('subtotalVal').textContent =
+    money(sub);
+    document.getElementById('vatVal').textContent =
+    money(vat);
+    document.getElementById('shippingVal').textContent =
+    ship === 0 && after > 0
+        ? 'FREE 🎉'
+        : money(ship);
+    document.getElementById('totalVal').textContent =
+    money(total);
+    document.getElementById('summaryTotal').textContent =
+    money(total);
     document.getElementById('cartCountBadge').textContent   = count;
     document.getElementById('summaryItemCount').textContent = count + ' item' + (count !== 1 ? 's' : '') + ' in your cart';
 
@@ -431,9 +550,14 @@ function changeQty(id, delta) {
     const qtyEl  = document.getElementById('qty-' + id);
     const lineEl = document.getElementById('line-' + id);
     const wrap   = document.querySelector('.qty-wrap[data-id="' + id + '"]');
+    const convertedPrice = convertPrice(
+    item.price,
+    item.currency || 'LRD',
+    window.CART_CURRENCY
+    );
 
     if (qtyEl)  qtyEl.textContent  = item.qty;
-    if (lineEl) lineEl.textContent = fmt(item.price * item.qty);
+    if (lineEl) lineEl.textContent = money(convertedPrice * item.qty);
     if (wrap) {
         wrap.querySelector('.qty-minus').disabled = item.qty <= 1;
         wrap.querySelector('.qty-plus').disabled  = item.qty >= (item.stock || 99);
@@ -514,7 +638,15 @@ function saveForLater(id) {
         <div class="w-14 h-14 rounded-xl bg-purple-50 flex items-center justify-center overflow-hidden shrink-0">${thumbHtml}</div>
         <div class="flex-1 min-w-0">
             <p class="font-semibold text-gray-900 text-sm truncate">${item.name}</p>
-            <p class="text-xs text-gray-400 mt-0.5">${fmt(item.price)}</p>
+            <p class="text-xs text-gray-400 mt-0.5">
+                ${money(
+                    convertPrice(
+                        item.price,
+                        item.currency || 'LRD',
+                        window.CART_CURRENCY
+                    )
+                )}
+            </p>
         </div>
         <button onclick="moveToCart('${id}')"
             class="text-xs font-bold text-plum border border-purple-200 px-4 py-2 rounded-full hover:bg-plum hover:text-white hover:border-plum transition-all whitespace-nowrap">

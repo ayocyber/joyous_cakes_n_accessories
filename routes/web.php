@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -15,6 +16,8 @@ Route::get('/contact', function () {
     return view('pages.contact');
 })->name('contact');
 
+Route::post('/subscribe', [SubscriberController::class, 'store'])
+    ->name('subscribe');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 

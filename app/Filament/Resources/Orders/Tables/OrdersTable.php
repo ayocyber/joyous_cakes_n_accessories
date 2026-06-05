@@ -6,6 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use App\Models\Order;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -57,6 +58,26 @@ class OrdersTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                EditAction::make('confirmPayment')
+                    ->label('Confirm Payment')
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->action(function (Order $record) {
+
+                        $record->update([
+                            'payment_status' => 'paid',
+                            'status' => 'processing',
+                        ]);
+
+                        foreach ($record->items as $item) {
+
+                            $item->product->decrement(
+                                'stock',
+                                $item->quantity
+                            );
+                        }
+                    }),                    
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
